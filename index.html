@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Federico Trotta</title>
+    <link rel="stylesheet" href="https://4skinSkywalker.github.io/Assets-for-my-Codepen/reset.css">
+    <link rel="stylesheet" href="https://4skinSkywalker.github.io/Aeon-Flexx-CSS/aeon-flexx.css">
+    <script src="https://4skinSkywalker.github.io/Aeon-Flexx-CSS/aeon-flexx.js" defer></script>
+    <style>
+      @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+      .nav-item.active,
+      .nav-item.active .nav-link {
+        background-color: #222;
+      }
+
+      body {
+        background-color: #444;
+      }
+
+      .container {
+        display: grid;
+        grid-template-columns: 400px 1fr;
+        max-width: 1600px;
+        min-height: calc(100svh - 40px);
+        margin: 0 auto;
+      }
+
+      .aside {
+        background-color: #111;
+        border-right: 2px solid rgba(var(--primary-color), 1);
+        display: grid;
+        align-content: start;
+      }
+
+      .contact ul {
+        display: grid;
+        justify-content: start;
+        gap: 20px;
+      }
+
+      .contact a {
+        text-decoration: none;
+        text-align: left;
+        width: 100%;
+      }
+
+      .main {
+        background-color: #333;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .main>.nav-content {
+        background-color: #222;
+        flex: 1 1 auto;
+      }
+
+      .image {
+        justify-self: center;
+        width: 325px;
+        height: 325px;
+        display: inline-block;
+        font-size: 12px;
+        line-height: 1;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .header {
+        position: relative;
+        text-transform: uppercase;
+        padding-block: 3rem;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .divider {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+
+      h1>*:nth-child(1) {
+        font-size: 3rem;
+        line-height: 1;
+      }
+
+      h1>*:nth-child(2) {
+        font-size: 4.5rem;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      section {
+        padding: 20px;
+      }
+
+      section .section-title {
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .artdeco-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .artdeco {
+        position: relative;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: 15px;
+        padding-bottom: 15px;
+      }
+
+      .artdeco:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2px;
+        background-color: rgba(var(--primary-color), 1);
+        box-shadow: 0 0 15px rgba(var(--primary-color), 0.5);
+      }
+
+      .artdeco-image {
+        font-size: 0.25rem;
+        line-height: 1;
+      }
+
+      .artdeco-role {
+        font-weight: 700;
+        font-size: 1.25rem;
+      }
+
+      .artdeco-company,
+      .artdeco-duration {
+        font-size: 0.9rem;
+      }
+
+      .artdeco-company,
+      .artdeco-duration,
+      .artdeco-location {
+        color: rgba(var(--primary-color), 0.75)
+      }
+
+      .artdeco-descr {
+        margin-top: 15px;
+      }
+
+      @media (max-width: 992px) {
+        .container {
+          grid-template-columns: 1fr;
+        }
+
+        .aside {
+          border-right: none;
+          border-bottom: 2px solid rgba(var(--primary-color), 1);
+        }
+      }
+
+      @media (max-width: 576px) {
+        .artdeco {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <aside class="aside">
+        <pre class="image self-type" data-speed="0">###############%###*#+*####%%######**#############
+%##%##%##%##%%#*+++***###############***##########
+%##%%#%#%%%##*****+***####%%%%%%#######**#%%%%%%%%
+#%%##%%%#######*+=++=+++=+****##%%#####*##*#%%%%%%
+%%%%%%%%%#####*+=-==-----======++*%%%%%#######%%%%
+%%%%%%%%%#####+=--------=-----====*%%%%########%%%
+%%%%%%%%%####*==--------==========+%%%%##%%#####%%
+%%%%%%%%%%###+==-------===---=====+#%%%###%%%####%
+%%%%%%%%%%%##+=---======+=-==++++++##%%%%%%##%%###
+%%%%%%%%%%%#*+==+####*++====+++====*####%%@@%#%###
+%%%%%%%%%%%#*=--=*=##*+--=+++*+=+==#%#%#%%@@@%%#%%
+%%%%%%%%%*-=*=--======---==========+#++#%%@@@%%#%%
+%%%%%%%%%+--+---===------======---=++=*#%%@@@@%#%%
+%%%%%%%%%+==-=-----------====-----=++*%#%%@@@@%#%@
+%%%%%%%%%#=------=-----++=====----===#%%%%@@@@%#%@
+%%%%%%%%%%#=---==-------=======--=+%%%%%%%@@@@%%%@
+%%%%%%%%%%%%@%=----=++++*======-==+%%%#%%%%%%%%%%%
+%%%%%%%%%%%%%%+----=-==++======-==###%%%%%@%%%%%%%
+%%%%%%%%%%%%%%#--------===---=-==+#%%%%%%%@%@@@@@@
+%%%%%%%%%%%%%%%+--------------===+%%%%%%%@@%@@@@@@
+%%%%%%%%%%%%%%#=--------------=-==#%%%%%%%@%@@@@@@
+%%%%%%%%%%%%%%+=-==--==++=---=====+*%@@%%@@%@@@@@@
+%%%%%%%%%%%%%#-:-====+++*=-===-====*%%@@@@@@@@@@@@
+%%%%%%%%%%%%%#+::::===+++=-----====#%@@@@@@@@@@@@@
+%%%%%%%%%###=###-::::-=+#=------=+#%%@@@@@@@@@@@@@
+%%%%%%%####*=*##=:::-*%%%+=--===+#%@%%%%%@@%%%%%%%
+%%%%%#######+=-++-=#%%%%%*++=++*#%@%%%%%%%@@@%%%%%</pre>
+        <section class="contact">
+          <h3 class="glitch section-title" data-text="Contact">Contact</h3>
+          <ul>
+            <li>
+              <a class="btn btn-primary" href="mailto:federicotrotta92@gmail.com" target="_blank">
+                <span class="bi bi-envelope"> federicotrotta92@gmail.com</span>
+              </a>
+            </li>
+            <li>
+              <a class="btn btn-primary" href="tel:+393478358507" target="_blank">
+                <span class="bi bi-telephone"> +39 347 83 58 507</span>
+              </a>
+            </li>
+            <li>
+              <a class="btn btn-primary" href="https://www.linkedin.com/in/f3d3r1c07r0774/" target="_blank">
+                <span class="bi bi-linkedin"> f3d3r1c07r0774</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section class="about-me">
+          <h3 class="glitch section-title" data-text="About me">About me</h3>
+          <div class="section-text">Experienced IT consultant in banking and Web3 developer, skilled in backoffice apps, blockchain integration, and tooling. Passionate about tech, health, fitness, and lifelong learning.</div>
+        </section>
+        <section class="skills">
+          <h3 class="glitch section-title" data-text="Skills">Skills</h3>
+          <div class="d-flex flex-column gap-1">
+            <div>
+              <label class="btn" for="skill-0" tabindex="0">> JS Specialist (click for more)</label>
+              <div class="collapse">
+                <input class="collapse-trigger" id="skill-0" type="checkbox">
+                <div class="collapse-body">
+                  <div class="card-body">Deep expertise in JavaScript across frontend and backend. Fluent in modern frameworks, performance tuning, and writing clean, scalable code. Turning complex ideas into smooth, interactive experiences.</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label class="btn" for="skill-1" tabindex="0">> CSS Architect (click for more)</label>
+              <div class="collapse">
+                <input class="collapse-trigger" id="skill-1" type="checkbox">
+                <div class="collapse-body">
+                  <div class="card-body">Crafting pixel-perfect, responsive designs with an eye for detail and elegance. I push CSS to its creative limits—animations, layouts, and visual polish that bring interfaces to life.</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label class="btn" for="skill-2" tabindex="0">> HTML Markuper (click for more)</label>
+              <div class="collapse">
+                <input class="collapse-trigger" id="skill-2" type="checkbox">
+                <div class="collapse-body">
+                  <div class="card-body">Master of semantic structure and clean, accessible markup. I craft HTML that’s not just functional, but future-proof and elegant. Every tag has a purpose.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </aside>
+      <main class="main">
+        <header class="header">
+          <h1>
+            <div class="self-type" data-speed="75">Federico</div>
+            <div class="self-type" data-speed="50">Trotta</div>
+          </h1>
+          <h2 class="self-type" data-speed="25">Bug-hunter & Codesmith</h2>
+          <div class="divider self-type" data-speed="10">################################################################</div>
+        </header>
+        <ul class="nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Experience</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Projects</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Education</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Languages</a>
+          </li>
+        </ul>
+        <div class="nav-content">
+          <section class="experience">
+            <h3 class="glitch section-title" data-text="Experience">Experience</h3>
+            <div class="artdeco-list">
+              <div class="artdeco">
+                <pre class="artdeco-image">--------------------------------------------------
+--------------------------------------------------
+--------------------------------------------------
+-----------------------::::-----------------------
+------------====-:..............:--==-------------
+---------====-:....................:-=-------==---
+--------===-:.................:-.....:--===+++=---
+-------===:...........:::...:=+:.......-=+++=-----
+-----==+=-............++++.-++........:++++=------
+-----==+++=........++-=++-=++........+++=:--------
+----===-.=++=.......-++:.=++.......-+++:..:-------
+----==-...-++=.......:+++++:......=++=.....-------
+----==-....:+++........=++-.....:+++-......-------
+----==-.....-++=........--.....:+++-.......-------
+----==-......=++=......=++=....+++-........-------
+----==-.......+++-....+++++=..+++=.........-------
+-----==-......:+++...+++:=++--+++.........--------
+------=-:......-++-.+++:..=+++++:........:--------
+------==-:......+++=++.....=+++=........:--------:
+-------==-:.....-+++=.......-++........:-------:::
+---------==-:...:++-.................:---------:::
+-----------==-:..::................:----------::::
+-------------==--:..............:-----------::::::
+----------------------:::::-----------------------
+--------------------------------------------------
+--------------------------------------------------
+--------------------------------------------------</pre>
+                <div>
+                  <div class="artdeco-role">Web developer</div>
+                  <div class="artdeco-company">Wellyme - Part-time</div>
+                  <div class="artdeco-duration">Dec 2023 - Present</div>
+                  <div class="artdeco-location">Remote</div>
+                  <div class="artdeco-descr">Development of the user interface for the Wellyme.org blog, focusing on creating reusable components and flexible, scalable data schemas. Additionally, established social media accounts and initiated the blog’s online presence.</div>
+                </div>
+              </div>
+              <div class="artdeco">
+                <pre class="artdeco-image">..................................................
+..................................................
+*############=....:*####-..:+####*-....-##=...:##+
+###*++++####*.:-.:###=*#*.+########*..-####-..=###
+###:...*##*:.-##+.*###*+:-###-..:=+-.:######-.=###
+###:-=-=###+:-##+.-+=*###=###=..-+*=:*##**###:=###
+###-*##+-+##*-##*=###*###:=########+*########*=###
+###:.=###+.:.-##+.=+***+:..:=****+-.=*+....+*+:+*=
+*#*:.+###+...-##*.................................
+...=############*.................................
+..................................................</pre>
+                <div>
+                  <div class="artdeco-role">Web developer</div>
+                  <div class="artdeco-company">SCAI Itec</div>
+                  <div class="artdeco-duration">Nov 2022 - Present</div>
+                  <div class="artdeco-location">Padua</div>
+                  <div class="artdeco-descr">Led development of core UI modules and the homepage for the company portal, including an AI-powered user assistant, while also building a full-stack Federated Learning R&D tool with an intuitive interface for federation setup.</div>
+                </div>
+              </div>
+              <div class="artdeco">
+                <pre class="artdeco-image">++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++----------------------++++++++++++++
+++++++++++++++......................++++++++++++++
+++++++++++++++..                 ...++++++++++++++
+++++++++++++++..                 ...++++++++++++++
+++++++++++++++..                 ...++++++++++++++
+++++++++++++++..                 ...++++++++++++++
+++++++++++++++..                 ...++++++++++++++
+++++++++++++++..                 ...++++++++++++++
+++++++++++++++..                 ...++++++++++++++
+++++++++++++++..                 ...++++++++++++++
+++++++++++++++..               .....++++++++++++++
+++++++++++++++......................++++++++++++++
+++++++++++++++----------------------++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++</pre>
+                <div>
+                  <div class="artdeco-role">Web developer</div>
+                  <div class="artdeco-company">Ebox</div>
+                  <div class="artdeco-duration">May 2021 - May 2022</div>
+                  <div class="artdeco-location">Remote</div>
+                  <div class="artdeco-descr">Developed websites and dApps for the ebox project, gaining experience with smart contracts and blockchain libraries. Worked with web3.js, ethers.js, Polkadot API, and many wallet providers like MetaMask, WalletLink, and Coinbase Wallet.</div>
+                </div>
+              </div>
+              <div class="artdeco">
+                <pre class="artdeco-image">..................................................
+..................................................
+*############=....:*####-..:+####*-....-##=...:##+
+###*++++####*.:-.:###=*#*.+########*..-####-..=###
+###:...*##*:.-##+.*###*+:-###-..:=+-.:######-.=###
+###:-=-=###+:-##+.-+=*###=###=..-+*=:*##**###:=###
+###-*##+-+##*-##*=###*###:=########+*########*=###
+###:.=###+.:.-##+.=+***+:..:=****+-.=*+....+*+:+*=
+*#*:.+###+...-##*.................................
+...=############*.................................
+..................................................</pre>
+                <div>
+                  <div class="artdeco-role">Web developer</div>
+                  <div class="artdeco-company">SCAI Itec</div>
+                  <div class="artdeco-duration">Jul 2019 - Nov 2021</div>
+                  <div class="artdeco-location">Padua</div>
+                  <div class="artdeco-descr">Developed projects in the banking sector, including Rating Desk, for credit assessments; Risk Centre, a risk analysis tool; and Accounting Integrator, which helps with financial data integration such as transactions and balances.</div>
+                </div>
+              </div>
+              <div class="artdeco">
+                <pre class="artdeco-image">           +++++++++++++++++++                    
+           ++++++++++++++++++++++                 
+           ++++++++++++++++++++++++               
+           ++++++++++++++++++++++++++             
+           ++++++++        +++++++++++            
+           ++++++++          ++++++++++           
+           ++++++++           +++++++++           
+           ++++++++           +++++++++           
+           ++++++++            ++++++++           
+           ++++++++           +++++++++           
+           ++++++++           +++++++++           
+           ++++++++          ++++++++++           
+           ++++++++        +++++++++++            
+           ++++++++++++++++++++++++++             
+           ++++++++++++++++++++++++               
+           ++++++++++++++++++++++                 
+           +++++++++++++++++++                    </pre>
+                <div>
+                  <div class="artdeco-role">Web developer</div>
+                  <div class="artdeco-company">Didacloud</div>
+                  <div class="artdeco-duration">Jan 2016 - Jan 2018</div>
+                  <div class="artdeco-location">Padua</div>
+                  <div class="artdeco-descr">Responsibilities included managing virtual machines and video streaming servers. Developed a Postfix-based Linux mail server for anti-spam and an e-learning app. Also created an e-commerce, worked on DNS, and modified existing software.</div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="projects">
+            <h3 class="glitch section-title" data-text="Projects">Projects</h3>
+          </section>
+          <section class="education">
+            <h3 class="glitch section-title" data-text="Education">Education</h3>
+          </section>
+          <section class="languages">
+            <h3 class="glitch section-title" data-text="Languages">Languages</h3>
+          </section>
+        </div>
+      </main>
+    </div>
+    <script>
+      let selectedTab = "experience";
+
+      function showSelectedTab() {
+        const sections = document.querySelectorAll(".nav-content > section");
+        sections.forEach(el => el.style.display = "none");
+        const section = document.querySelector(".nav-content > section." + selectedTab);
+        section.style.display = "block";
+      }
+      showSelectedTab();
+      const navItems = document.querySelectorAll(".nav-item");
+      navItems.forEach(navItem => {
+        const navLink = navItem.querySelector(".nav-link");
+        navLink.addEventListener("click", evt => {
+          evt.preventDefault();
+          navItems.forEach(el => el.classList.remove("active"));
+          navItem.classList.add("active");
+          selectedTab = navLink.innerText.toLowerCase();
+          showSelectedTab();
+        });
+      })
+    </script>
+  </body>
+</html>
