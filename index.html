@@ -121,10 +121,33 @@
         content: "";
         position: absolute;
         bottom: 0;
-        width: 100%;
+        width: 0;
         height: 2px;
         background-color: rgba(var(--primary-color), 1);
         box-shadow: 0 0 15px rgba(var(--primary-color), 0.5);
+        animation: Widen 400ms ease-out forwards;
+      }
+
+      .artdeco:nth-child(2)::after {
+        animation-delay: 50ms;
+      }
+
+      .artdeco:nth-child(3)::after {
+        animation-delay: 100ms;
+      }
+
+      .artdeco:nth-child(4)::after {
+        animation-delay: 150ms;
+      }
+
+      @keyframes Widen {
+        0% {
+          width: 0
+        }
+
+        100% {
+          width: 100%
+        }
       }
 
       .artdeco-image {
@@ -314,7 +337,7 @@
 --------------------------------------------------</pre>
                 <div>
                   <div class="artdeco-role">Web developer</div>
-                  <div class="artdeco-company">Wellyme - Part-time</div>
+                  <div class="artdeco-company self-type">Wellyme - Part-time</div>
                   <div class="artdeco-duration">Dec 2023 - Present</div>
                   <div class="artdeco-location">Remote</div>
                   <div class="artdeco-descr">Development of the user interface for the Wellyme.org blog, focusing on creating reusable components and flexible, scalable data schemas. Additionally, established social media accounts and initiated the blog’s online presence.</div>
@@ -334,7 +357,7 @@
 ..................................................</pre>
                 <div>
                   <div class="artdeco-role">Web developer</div>
-                  <div class="artdeco-company">SCAI Itec</div>
+                  <div class="artdeco-company self-type">SCAI Itec</div>
                   <div class="artdeco-duration">Nov 2022 - Present</div>
                   <div class="artdeco-location">Padua</div>
                   <div class="artdeco-descr">Led development of core UI modules and the homepage for the company portal, including an AI-powered user assistant, while also building a full-stack Federated Learning R&D tool with an intuitive interface for federation setup.</div>
@@ -370,7 +393,7 @@
 ++++++++++++++++++++++++++++++++++++++++++++++++++</pre>
                 <div>
                   <div class="artdeco-role">Web developer</div>
-                  <div class="artdeco-company">Ebox</div>
+                  <div class="artdeco-company self-type">Ebox</div>
                   <div class="artdeco-duration">May 2021 - May 2022</div>
                   <div class="artdeco-location">Remote</div>
                   <div class="artdeco-descr">Developed websites and dApps for the ebox project, gaining experience with smart contracts and blockchain libraries. Worked with web3.js, ethers.js, Polkadot API, and many wallet providers like MetaMask, WalletLink, and Coinbase Wallet.</div>
@@ -390,7 +413,7 @@
 ..................................................</pre>
                 <div>
                   <div class="artdeco-role">Web developer</div>
-                  <div class="artdeco-company">SCAI Itec</div>
+                  <div class="artdeco-company self-type">SCAI Itec</div>
                   <div class="artdeco-duration">Jul 2019 - Nov 2021</div>
                   <div class="artdeco-location">Padua</div>
                   <div class="artdeco-descr">Developed projects in the banking sector, including Rating Desk, for credit assessments; Risk Centre, a risk analysis tool; and Accounting Integrator, which helps with financial data integration such as transactions and balances.</div>
@@ -416,7 +439,7 @@
            +++++++++++++++++++                    </pre>
                 <div>
                   <div class="artdeco-role">Web developer</div>
-                  <div class="artdeco-company">Didacloud</div>
+                  <div class="artdeco-company self-type">Didacloud</div>
                   <div class="artdeco-duration">Jan 2016 - Jan 2018</div>
                   <div class="artdeco-location">Padua</div>
                   <div class="artdeco-descr">Responsibilities included managing virtual machines and video streaming servers. Developed a Postfix-based Linux mail server for anti-spam and an e-learning app. Also created an e-commerce, worked on DNS, and modified existing software.</div>
