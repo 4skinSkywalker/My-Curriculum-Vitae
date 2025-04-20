@@ -28,10 +28,16 @@
 
     body {
       background-color: #444;
+      transition: all 400ms ease;
+    }
+
+    body.fredopen {
+      padding: 0;
+      transition: all 400ms ease 400ms;
     }
 
     .moving {
-        user-select: none;
+      user-select: none;
     }
 
     .container {
@@ -43,16 +49,19 @@
       margin: 0 auto;
     }
 
+    body.fredopen .container {
+      min-height: 100svh;
+      max-height: 100svh;
+    }
+
     .aside {
       position: relative;
       background-color: #111;
       border-right: 2px solid rgba(var(--primary-color), 1);
-      display: grid;
-      align-content: start;
       overflow: hidden;
     }
 
-    .resizer {
+    .aside .resizer {
       content: "";
       position: absolute;
       top: 347px;
@@ -62,6 +71,23 @@
       background-color: rgba(var(--primary-color), 1); 
       cursor: pointer;
       box-shadow: 0 0 15px rgba(var(--primary-color), 0.5);
+    }
+
+    .aside-default {
+      display: grid;
+      align-content: start;
+    }
+
+    body.fredopen .aside-default {
+      display: none;
+    }
+
+    .aside-editors {
+      display: none;
+    }
+
+    body.fredopen .aside-editors {
+      display: block;
     }
 
     .contact ul {
@@ -105,23 +131,44 @@
       margin-bottom: 1.5rem;
       text-align: center;
       overflow: hidden;
+      max-height: 320px;
+      transition: all 400ms ease;
     }
 
-    .divider {
+    body.fredopen .header {
+      padding: 0;
+      max-height: 0;
+      margin-bottom: 10px;
+      transition: all 400ms ease 400ms;
+    }
+
+    .header .divider {
       position: absolute;
       bottom: 0;
       right: 0;
+      transition: all 400ms ease;
     }
 
-    h1 > *:nth-child(1) {
-      font-size: 3rem;
+    .header h1 > *:nth-child(1),
+    .header h1 > *:nth-child(2) {
       line-height: 1;
+      transition: all 400ms ease;
+    }
+    
+    .header h1 > *:nth-child(1) {
+      font-size: 3rem;
     }
 
-    h1 > *:nth-child(2) {
+    .header h1 > *:nth-child(2) {
       font-size: 4.5rem;
       font-weight: 700;
-      line-height: 1;
+    }
+
+    body.fredopen .header h1 > *:nth-child(1),
+    body.fredopen .header h1 > *:nth-child(2),
+    body.fredopen .header h2,
+    body.fredopen .header .divider {
+      opacity: 0;
     }
 
     .nav {
@@ -281,8 +328,10 @@
   <div class="container">
     <aside class="aside">
       <div class="resizer"></div>
+
+      <div class="aside-default">
       
-      <pre class="image self-type" data-speed="0">###############%###*#+*####%%######**#############
+        <pre class="image self-type" data-speed="0">###############%###*#+*####%%######**#############
 %##%##%##%##%%#*+++***###############***##########
 %##%%#%#%%%##*****+***####%%%%%%#######**#%%%%%%%%
 #%%##%%%#######*+=++=+++=+****##%%#####*##*#%%%%%%
@@ -309,67 +358,72 @@
 %%%%%%%%%###=###-::::-=+#=------=+#%%@@@@@@@@@@@@@
 %%%%%%%####*=*##=:::-*%%%+=--===+#%@%%%%%@@%%%%%%%
 %%%%%#######+=-++-=#%%%%%*++=++*#%@%%%%%%%@@@%%%%%</pre>
-      
-      <section class="contact">
-        <h3 class="glitch section-title" data-text="Contact">Contact</h3>
-        <ul>
-          <li>
-            <a class="btn btn-primary" href="mailto:federicotrotta92@gmail.com" target="_blank">
-              <span class="bi bi-envelope"> federicotrotta92@gmail.com</span>
-            </a>
-          </li>
-          <li>
-            <a class="btn btn-primary" href="tel:+393478358507" target="_blank">
-              <span class="bi bi-telephone"> +39 347 83 58 507</span>
-            </a>
-          </li>
-          <li>
-            <a class="btn btn-primary" href="https://www.linkedin.com/in/f3d3r1c07r0774/" target="_blank">
-              <span class="bi bi-linkedin"> f3d3r1c07r0774</span>
-            </a>
-          </li>
-        </ul>
-      </section>
-      
-      <section class="about-me">
-        <h3 class="glitch section-title" data-text="About me">About me</h3>
-        <div class="section-text">Experienced IT consultant in banking and Web3 developer, skilled in backoffice apps, blockchain integration, and tooling. Passionate about tech, health, fitness, and lifelong learning.</div>
-      </section>
-      
-      <section class="skills">
-        <h3 class="glitch section-title" data-text="Skills">Skills</h3>
-        <div class="d-flex flex-column gap-1">
-          <div>
-            <label class="btn" for="skill-0" tabindex="0">> JS Specialist (clickable)</label>
-            <div class="collapse">
-              <input class="collapse-trigger" id="skill-0" type="checkbox">
-              <div class="collapse-body">
-                <div class="card-body">Deep expertise in JavaScript across frontend and backend. Fluent in modern frameworks, performance tuning, and writing clean, scalable code. Turning complex ideas into smooth, interactive experiences.</div>
+        
+        <section class="contact">
+          <h3 class="glitch section-title" data-text="Contact">Contact</h3>
+          <ul>
+            <li>
+              <a class="btn btn-primary" href="mailto:federicotrotta92@gmail.com" target="_blank">
+                <span class="bi bi-envelope"> federicotrotta92@gmail.com</span>
+              </a>
+            </li>
+            <li>
+              <a class="btn btn-primary" href="tel:+393478358507" target="_blank">
+                <span class="bi bi-telephone"> +39 347 83 58 507</span>
+              </a>
+            </li>
+            <li>
+              <a class="btn btn-primary" href="https://www.linkedin.com/in/f3d3r1c07r0774/" target="_blank">
+                <span class="bi bi-linkedin"> f3d3r1c07r0774</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+        
+        <section class="about-me">
+          <h3 class="glitch section-title" data-text="About me">About me</h3>
+          <div class="section-text">Experienced IT consultant in banking and Web3 developer, skilled in backoffice apps, blockchain integration, and tooling. Passionate about tech, health, fitness, and lifelong learning.</div>
+        </section>
+        
+        <section class="skills">
+          <h3 class="glitch section-title" data-text="Skills">Skills</h3>
+          <div class="d-flex flex-column gap-1">
+            <div>
+              <label class="btn" for="skill-0" tabindex="0">> JS Specialist (clickable)</label>
+              <div class="collapse">
+                <input class="collapse-trigger" id="skill-0" type="checkbox">
+                <div class="collapse-body">
+                  <div class="card-body">Deep expertise in JavaScript across frontend and backend. Fluent in modern frameworks, performance tuning, and writing clean, scalable code. Turning complex ideas into smooth, interactive experiences.</div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <label class="btn" for="skill-1" tabindex="0">> CSS Architect (clickable)</label>
+              <div class="collapse">
+                <input class="collapse-trigger" id="skill-1" type="checkbox">
+                <div class="collapse-body">
+                  <div class="card-body">Crafting pixel-perfect, responsive designs with an eye for detail and elegance. I push CSS to its creative limits—animations, layouts, and visual polish that bring interfaces to life.</div>
+                </div>
+              </div>
+            </div>
+            
+            <div>
+              <label class="btn" for="skill-2" tabindex="0">> HTML Markuper (clickable)</label>
+              <div class="collapse">
+                <input class="collapse-trigger" id="skill-2" type="checkbox">
+                <div class="collapse-body">
+                  <div class="card-body">Master of semantic structure and clean, accessible markup. I craft HTML that’s not just functional, but future-proof and elegant. Every tag has a purpose.</div>
+                </div>
               </div>
             </div>
           </div>
-          
-          <div>
-            <label class="btn" for="skill-1" tabindex="0">> CSS Architect (clickable)</label>
-            <div class="collapse">
-              <input class="collapse-trigger" id="skill-1" type="checkbox">
-              <div class="collapse-body">
-                <div class="card-body">Crafting pixel-perfect, responsive designs with an eye for detail and elegance. I push CSS to its creative limits—animations, layouts, and visual polish that bring interfaces to life.</div>
-              </div>
-            </div>
-          </div>
-          
-          <div>
-            <label class="btn" for="skill-2" tabindex="0">> HTML Markuper (clickable)</label>
-            <div class="collapse">
-              <input class="collapse-trigger" id="skill-2" type="checkbox">
-              <div class="collapse-body">
-                <div class="card-body">Master of semantic structure and clean, accessible markup. I craft HTML that’s not just functional, but future-proof and elegant. Every tag has a purpose.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
+      <div class="aside-editors">
+        Work In Progress
+      </div>
     </aside>
     <main class="main">
       <header class="header">
@@ -390,6 +444,9 @@
         </li>
         <li class="nav-item languages">
           <a class="nav-link" href="#">Languages</a>
+        </li>
+        <li class="nav-item fredopen">
+          <a class="nav-link" href="#">Fredopen</a>
         </li>
       </ul>
       
@@ -758,6 +815,10 @@ d8'    88                                 88        88                          
             </div>
           </div>
         </section>
+
+        <section class="fredopen">
+          Work In Progress
+        </section>
       </div>
     </main>
   </div>
@@ -773,6 +834,11 @@ d8'    88                                 88        88                          
     let selectedTab = "experience";
 
     function showSelectedTab() {
+      if (selectedTab === "fredopen") {
+        document.body.classList.add("fredopen");
+      } else {
+        document.body.classList.remove("fredopen");
+      }
       sections.forEach(el => el.style.display = "none");
       const section = document.querySelector(".nav-content > section." + selectedTab);
       section.style.display = "block";
