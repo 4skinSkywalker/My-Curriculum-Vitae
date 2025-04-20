@@ -10,7 +10,7 @@ const jsEditor = document.querySelector(".editor.js");
 const sections = document.querySelectorAll(".nav-content > section");
 const navItems = document.querySelectorAll(".nav-item");
 let editors = {};
-let selectedTab = "fredopen";
+let selectedTab = "experience";
 
 function debounce(callback, wait) {
     let timeoutId = null;
