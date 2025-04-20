@@ -30,19 +30,38 @@
       background-color: #444;
     }
 
+    .moving {
+        user-select: none;
+    }
+
     .container {
+      --aside-width: 400px;
       display: grid;
-      grid-template-columns: 400px 1fr;
+      grid-template-columns: var(--aside-width) 1fr;
       max-width: 1600px;
       min-height: calc(100svh - 40px);
       margin: 0 auto;
     }
 
     .aside {
+      position: relative;
       background-color: #111;
       border-right: 2px solid rgba(var(--primary-color), 1);
       display: grid;
       align-content: start;
+      overflow: hidden;
+    }
+
+    .resizer {
+      content: "";
+      position: absolute;
+      top: 347px;
+      right: 0;
+      width: 10px;
+      height: 40px;
+      background-color: rgba(var(--primary-color), 1); 
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(var(--primary-color), 0.5);
     }
 
     .contact ul {
@@ -63,7 +82,7 @@
       flex-direction: column;
     }
 
-    .main>.nav-content {
+    .main > .nav-content {
       background-color: #222;
       flex: 1 1 auto;
     }
@@ -94,12 +113,12 @@
       right: 0;
     }
 
-    h1>*:nth-child(1) {
+    h1 > *:nth-child(1) {
       font-size: 3rem;
       line-height: 1;
     }
 
-    h1>*:nth-child(2) {
+    h1 > *:nth-child(2) {
       font-size: 4.5rem;
       font-weight: 700;
       line-height: 1;
@@ -157,23 +176,16 @@
     .artdeco:nth-child(2)::after {
       animation-delay: 50ms;
     }
-
     .artdeco:nth-child(3)::after {
       animation-delay: 100ms;
     }
-
     .artdeco:nth-child(4)::after {
       animation-delay: 150ms;
     }
 
     @keyframes Widen {
-      0% {
-        width: 0
-      }
-
-      100% {
-        width: 100%
-      }
+      0% { width: 0 }
+      100% { width: 100% }
     }
 
     .artdeco-image {
@@ -230,14 +242,18 @@
       margin-bottom: 10px;
     }
 
-    @media (max-width: 992px) {
+    @media (max-width: 768px) {
       .container {
         grid-template-columns: 1fr;
       }
-
+      
       .aside {
         border-right: none;
         border-bottom: 2px solid rgba(var(--primary-color), 1);
+      }
+      
+      .resizer {
+        display: none;
       }
     }
 
@@ -245,15 +261,15 @@
       .artdeco {
         grid-template-columns: 1fr;
       }
-
+      
       .projects-list {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       }
-
+      
       .projects .card-title {
         font-size: 0.2rem;
       }
-
+      
       .header h2 {
         font-size: 24px;
       }
@@ -264,6 +280,8 @@
 <body>
   <div class="container">
     <aside class="aside">
+      <div class="resizer"></div>
+      
       <pre class="image self-type" data-speed="0">###############%###*#+*####%%######**#############
 %##%##%##%##%%#*+++***###############***##########
 %##%%#%#%%%##*****+***####%%%%%%#######**#%%%%%%%%
@@ -291,7 +309,7 @@
 %%%%%%%%%###=###-::::-=+#=------=+#%%@@@@@@@@@@@@@
 %%%%%%%####*=*##=:::-*%%%+=--===+#%@%%%%%@@%%%%%%%
 %%%%%#######+=-++-=#%%%%%*++=++*#%@%%%%%%%@@@%%%%%</pre>
-
+      
       <section class="contact">
         <h3 class="glitch section-title" data-text="Contact">Contact</h3>
         <ul>
@@ -312,13 +330,12 @@
           </li>
         </ul>
       </section>
-
+      
       <section class="about-me">
         <h3 class="glitch section-title" data-text="About me">About me</h3>
-        <div class="section-text">Experienced IT consultant in banking and Web3 developer, skilled in backoffice apps,
-          blockchain integration, and tooling. Passionate about tech, health, fitness, and lifelong learning.</div>
+        <div class="section-text">Experienced IT consultant in banking and Web3 developer, skilled in backoffice apps, blockchain integration, and tooling. Passionate about tech, health, fitness, and lifelong learning.</div>
       </section>
-
+      
       <section class="skills">
         <h3 class="glitch section-title" data-text="Skills">Skills</h3>
         <div class="d-flex flex-column gap-1">
@@ -327,32 +344,27 @@
             <div class="collapse">
               <input class="collapse-trigger" id="skill-0" type="checkbox">
               <div class="collapse-body">
-                <div class="card-body">Deep expertise in JavaScript across frontend and backend. Fluent in modern
-                  frameworks, performance tuning, and writing clean, scalable code. Turning complex ideas into smooth,
-                  interactive experiences.</div>
+                <div class="card-body">Deep expertise in JavaScript across frontend and backend. Fluent in modern frameworks, performance tuning, and writing clean, scalable code. Turning complex ideas into smooth, interactive experiences.</div>
               </div>
             </div>
           </div>
-
+          
           <div>
             <label class="btn" for="skill-1" tabindex="0">> CSS Architect (clickable)</label>
             <div class="collapse">
               <input class="collapse-trigger" id="skill-1" type="checkbox">
               <div class="collapse-body">
-                <div class="card-body">Crafting pixel-perfect, responsive designs with an eye for detail and elegance. I
-                  push CSS to its creative limits—animations, layouts, and visual polish that bring interfaces to life.
-                </div>
+                <div class="card-body">Crafting pixel-perfect, responsive designs with an eye for detail and elegance. I push CSS to its creative limits—animations, layouts, and visual polish that bring interfaces to life.</div>
               </div>
             </div>
           </div>
-
+          
           <div>
             <label class="btn" for="skill-2" tabindex="0">> HTML Markuper (clickable)</label>
             <div class="collapse">
               <input class="collapse-trigger" id="skill-2" type="checkbox">
               <div class="collapse-body">
-                <div class="card-body">Master of semantic structure and clean, accessible markup. I craft HTML that’s
-                  not just functional, but future-proof and elegant. Every tag has a purpose.</div>
+                <div class="card-body">Master of semantic structure and clean, accessible markup. I craft HTML that’s not just functional, but future-proof and elegant. Every tag has a purpose.</div>
               </div>
             </div>
           </div>
@@ -366,10 +378,9 @@
           <div class="self-type" data-speed="50">Trotta</div>
         </h1>
         <h2 class="self-type" data-speed="25">Bug-hunter & Codesmith</h2>
-        <div class="divider self-type" data-speed="10">################################################################
-        </div>
+        <div class="divider self-type" data-speed="10">################################################################</div>
       </header>
-
+      
       <ul class="nav">
         <li class="nav-item experience">
           <a class="nav-link" href="#">Experience</a>
@@ -381,11 +392,11 @@
           <a class="nav-link" href="#">Languages</a>
         </li>
       </ul>
-
+      
       <div class="nav-content">
         <section class="experience">
           <h3 class="glitch section-title" data-text="Experience">Experience</h3>
-
+          
           <div class="artdeco-list">
             <div class="artdeco">
               <pre class="artdeco-image">--------------------------------------------------
@@ -420,12 +431,10 @@
                 <div class="artdeco-company self-type">Wellyme - Part-time</div>
                 <div class="artdeco-duration">Dec 2023 - Present</div>
                 <div class="artdeco-location">Remote</div>
-                <div class="artdeco-descr">Development of the user interface for the Wellyme.org blog, focusing on
-                  creating reusable components and flexible, scalable data schemas. Additionally, established social
-                  media accounts and initiated the blog’s online presence.</div>
+                <div class="artdeco-descr">Development of the user interface for the Wellyme.org blog, focusing on creating reusable components and flexible, scalable data schemas. Additionally, established social media accounts and initiated the blog’s online presence.</div>
               </div>
             </div>
-
+            
             <div class="artdeco">
               <pre class="artdeco-image">..................................................
 ..................................................
@@ -443,12 +452,10 @@
                 <div class="artdeco-company self-type">SCAI Itec</div>
                 <div class="artdeco-duration">Nov 2022 - Present</div>
                 <div class="artdeco-location">Padua</div>
-                <div class="artdeco-descr">Led development of core UI modules and the homepage for the company portal,
-                  including an AI-powered user assistant, while also building a full-stack Federated Learning R&D tool
-                  with an intuitive interface for federation setup.</div>
+                <div class="artdeco-descr">Led development of core UI modules and the homepage for the company portal, including an AI-powered user assistant, while also building a full-stack Federated Learning R&D tool with an intuitive interface for federation setup.</div>
               </div>
             </div>
-
+            
             <div class="artdeco">
               <pre class="artdeco-image">++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -482,12 +489,10 @@
                 <div class="artdeco-company self-type">Ebox</div>
                 <div class="artdeco-duration">May 2021 - May 2022</div>
                 <div class="artdeco-location">Remote</div>
-                <div class="artdeco-descr">Developed websites and dApps for the ebox project, gaining experience with
-                  smart contracts and blockchain libraries. Worked with web3.js, ethers.js, Polkadot API, and many
-                  wallet providers like MetaMask, WalletLink, and Coinbase Wallet.</div>
+                <div class="artdeco-descr">Developed websites and dApps for the ebox project, gaining experience with smart contracts and blockchain libraries. Worked with web3.js, ethers.js, Polkadot API, and many wallet providers like MetaMask, WalletLink, and Coinbase Wallet.</div>
               </div>
             </div>
-
+            
             <div class="artdeco">
               <pre class="artdeco-image">..................................................
 ..................................................
@@ -505,46 +510,42 @@
                 <div class="artdeco-company self-type">SCAI Itec</div>
                 <div class="artdeco-duration">Jul 2019 - Nov 2021</div>
                 <div class="artdeco-location">Padua</div>
-                <div class="artdeco-descr">Developed projects in the banking sector, including Rating Desk, for credit
-                  assessments; Risk Centre, a risk analysis tool; and Accounting Integrator, which helps with financial
-                  data integration such as transactions and balances.</div>
+                <div class="artdeco-descr">Developed projects in the banking sector, including Rating Desk, for credit assessments; Risk Centre, a risk analysis tool; and Accounting Integrator, which helps with financial data integration such as transactions and balances.</div>
               </div>
             </div>
-
+            
             <div class="artdeco">
-              <pre class="artdeco-image">+++++++++++++++++++                    
-++++++++++++++++++++++                 
-++++++++++++++++++++++++               
-++++++++++++++++++++++++++             
-++++++++        +++++++++++            
-++++++++          ++++++++++           
-++++++++           +++++++++           
-++++++++           +++++++++           
-++++++++            ++++++++           
-++++++++           +++++++++           
-++++++++           +++++++++           
-++++++++          ++++++++++           
-++++++++        +++++++++++            
-++++++++++++++++++++++++++             
-++++++++++++++++++++++++               
-++++++++++++++++++++++                 
-+++++++++++++++++++                    </pre>
+              <pre class="artdeco-image">            +++++++++++++++++++                    
+            ++++++++++++++++++++++                 
+            ++++++++++++++++++++++++               
+            ++++++++++++++++++++++++++             
+            ++++++++        +++++++++++            
+            ++++++++          ++++++++++           
+            ++++++++           +++++++++           
+            ++++++++           +++++++++           
+            ++++++++            ++++++++           
+            ++++++++           +++++++++           
+            ++++++++           +++++++++           
+            ++++++++          ++++++++++           
+            ++++++++        +++++++++++            
+            ++++++++++++++++++++++++++             
+            ++++++++++++++++++++++++               
+            ++++++++++++++++++++++                 
+            +++++++++++++++++++                    </pre>
               <div>
                 <div class="artdeco-role">Web developer</div>
                 <div class="artdeco-company self-type">Didacloud</div>
                 <div class="artdeco-duration">Jan 2016 - Jan 2018</div>
                 <div class="artdeco-location">Padua</div>
-                <div class="artdeco-descr">Responsibilities included managing virtual machines and video streaming
-                  servers. Developed a Postfix-based Linux mail server for anti-spam and an e-learning app. Also created
-                  an e-commerce, worked on DNS, and modified existing software.</div>
+                <div class="artdeco-descr">Responsibilities included managing virtual machines and video streaming servers. Developed a Postfix-based Linux mail server for anti-spam and an e-learning app. Also created an e-commerce, worked on DNS, and modified existing software.</div>
               </div>
             </div>
           </div>
         </section>
-
+        
         <section class="projects">
           <h3 class="glitch section-title" data-text="Projects">Projects</h3>
-
+          
           <div class="projects-list">
             <div class="card">
               <div class="card-body">
@@ -556,12 +557,11 @@
 8888' Y88'   `88888P' dP dP `8888P88 dP  dP  dP `88888P' 
                                   .88                     
                               d8888P</pre>
-                <p class="card-text">Wellyme is my blog about Health, Nutrition, and Fitness, where I share insights to
-                  promote a healthy life.</p>
+                <p class="card-text">Wellyme is my blog about Health, Nutrition, and Fitness, where I share insights to promote a healthy life.</p>
                 <a href="https://www.wellyme.org/" target="_blank" class="btn btn-primary">Go to Wellyme</a>
               </div>
             </div>
-
+            
             <div class="card">
               <div class="card-body">
                 <pre class="card-title self-type" data-speed="0">.d88888b           dP dP                   oo                                       
@@ -572,13 +572,11 @@ d8'   .8P 88.  .88 88 88 88.  .88 88.  .88 88 88  88  88 88.  .88 88.  .88      
   Y88888P  `8888P88 dP dP `88888P' `8888P88 dP dP  dP  dP `88888P' `88888P' `88888P' 
                 .88                     .88                                          
             d8888P                  d8888P</pre>
-                <p class="card-text">Syllogimous v4 takes classic logic challenges and turns them into a brain workout.
-                </p>
-                <a href="https://4skinskywalker.github.io/Syllogimous-v4/" target="_blank" class="btn btn-primary">Go to
-                  Syllogimous v4</a>
+                <p class="card-text">Syllogimous v4 takes classic logic challenges and turns them into a brain workout.</p>
+                <a href="https://4skinskywalker.github.io/Syllogimous-v4/" target="_blank" class="btn btn-primary">Go to Syllogimous v4</a>
               </div>
             </div>
-
+            
             <div class="card">
               <div class="card-body">
                 <pre class="card-title self-type" data-speed="0">dP     dP                                         888888ba           dP                         dP       
@@ -589,13 +587,11 @@ d8'   .8P 88.  .88 88 88 88.  .88 88.  .88 88 88  88  88 88.  .88 88.  .88      
 dP     dP  `8888P88 88Y888P' `88888P' dP          dP     dP          88Y8888' `88888P8 `88888P' dP   `YP 
                 .88 88                                                                                   
             d8888P  dP</pre>
-                <p class="card-text">Hyper-dimensional n-back, improving traditional n-back tasks by engaging multiple
-                  cognitive dimensions.</p>
-                <a href="https://4skinskywalker.github.io/3D-Hyper-N-back/" target="_blank" class="btn btn-primary">Go
-                  to Hyper 3D N-back</a>
+                <p class="card-text">Hyper-dimensional n-back, improving traditional n-back tasks by engaging multiple cognitive dimensions.</p>
+                <a href="https://4skinskywalker.github.io/3D-Hyper-N-back/" target="_blank" class="btn btn-primary">Go to Hyper 3D N-back</a>
               </div>
             </div>
-
+            
             <div class="card">
               <div class="card-body">
                 <pre class="card-title self-type" data-speed="0"> .d888888             dP   oo   dP                  dP          
@@ -606,13 +602,11 @@ d8'    88             88        88                  88
 88     88  88Y888P'   dP   dP   dP   `88888P' `88888P8 `88888P' 
             88                                                   
             dP</pre>
-                <p class="card-text">Aptitude Tests is an app where you can take tests to prepare for various
-                  assessments and improve your skills.</p>
-                <a href="https://4skinskywalker.github.io/aptitude-tests/" target="_blank" class="btn btn-primary">Go to
-                  Aptitude Tests</a>
+                <p class="card-text">Aptitude Tests is an app where you can take tests to prepare for various assessments and improve your skills.</p>
+                <a href="https://4skinskywalker.github.io/aptitude-tests/" target="_blank" class="btn btn-primary">Go to Aptitude Tests</a>
               </div>
             </div>
-
+            
             <div class="card">
               <div class="card-body">
                 <pre class="card-title self-type" data-speed="0"> a88888b. .d88888b  .d88888b      .d888888                                      
@@ -620,50 +614,43 @@ d8'   `88 88.    "' 88.    "'    d8'    88
 88        `Y88888b. `Y88888b.    88aaaaa88a 88d888b. .d8888b. 88d888b. .d8888b. 
 88              `8b       `8b    88     88  88'  `88 88ooood8 88'  `88 88'  `88 
 Y8.   .88 d8'   .8P d8'   .8P    88     88  88       88.  ... 88    88 88.  .88 
- Y88888P'  Y88888P   Y88888P     88     88  dP       `88888P' dP    dP `88888P8</pre>
-                <p class="card-text">Play CSS challenges with your friends! This website serves as a testing ground for
-                  exploring multiplayer opportunities.</p>
+  Y88888P'  Y88888P   Y88888P     88     88  dP       `88888P' dP    dP `88888P8</pre>
+                <p class="card-text">Play CSS challenges with your friends! This website serves as a testing ground for exploring multiplayer opportunities.</p>
                 <a href="https://css-arena.org/" target="_blank" class="btn btn-primary">Go to CSS Arena</a>
               </div>
             </div>
-
+            
             <div class="card">
               <div class="card-body">
-                <pre class="card-title self-type"
-                  data-speed="0">dP   dP   dP                         dP    8888ba.88ba                                        oo                     dP   oo                   
+                <pre class="card-title self-type" data-speed="0">dP   dP   dP                         dP    8888ba.88ba                                        oo                     dP   oo                   
 88   88   88                         88    88  `8b  `8b                                                              88                        
 88  .8P  .8P .d8888b. 88d888b. .d888b88    88   88   88 .d8888b. 88d8b.d8b. .d8888b. 88d888b. dP d888888b .d8888b. d8888P dP .d8888b. 88d888b. 
 88  d8'  d8' 88'  `88 88'  `88 88'  `88    88   88   88 88ooood8 88'`88'`88 88'  `88 88'  `88 88    .d8P' 88'  `88   88   88 88'  `88 88'  `88 
 88.d8P8.d8P  88.  .88 88       88.  .88    88   88   88 88.  ... 88  88  88 88.  .88 88       88  .Y8P    88.  .88   88   88 88.  .88 88    88 
 8888' Y88'   `88888P' dP       `88888P8    dP   dP   dP `88888P' dP  dP  dP `88888P' dP       dP d888888P `88888P8   dP   dP `88888P' dP    dP</pre>
-                <p class="card-text">Word Memorization is an app designed to enhance memory retention through fun and
-                  engaging training.</p>
-                <a href="https://4skinskywalker.github.io/Word-Memorization-Training/" target="_blank"
-                  class="btn btn-primary">Go to Word Memorization</a>
+                <p class="card-text">Word Memorization is an app designed to enhance memory retention through fun and engaging training.</p>
+                <a href="https://4skinskywalker.github.io/Word-Memorization-Training/" target="_blank" class="btn btn-primary">Go to Word Memorization</a>
               </div>
             </div>
-
+            
             <div class="card">
               <div class="card-body">
-                <pre class="card-title self-type"
-                  data-speed="0"> .d888888                                 88888888b dP                                a88888b. .d88888b  .d88888b  
+                <pre class="card-title self-type" data-speed="0"> .d888888                                 88888888b dP                                a88888b. .d88888b  .d88888b  
 d8'    88                                 88        88                               d8'   `88 88.    "' 88.    "' 
 88aaaaa88a .d8888b. .d8888b. 88d888b.    a88aaaa    88 .d8888b. dP.  .dP dP.  .dP    88        `Y88888b. `Y88888b. 
 88     88  88ooood8 88'  `88 88'  `88     88        88 88ooood8  `8bd8'   `8bd8'     88              `8b       `8b 
 88     88  88.  ... 88.  .88 88    88     88        88 88.  ...  .d88b.   .d88b.     Y8.   .88 d8'   .8P d8'   .8P 
 88     88  `88888P' `88888P' dP    dP     dP        dP `88888P' dP'  `dP dP'  `dP     Y88888P'  Y88888P   Y88888P</pre>
-                <p class="card-text">Aeon Flexx CSS is a retro-futuristic stylesheet that transforms your interface into
-                  a cyberpunk terminal.</p>
-                <a href="https://4skinskywalker.github.io/Aeon-Flexx-CSS/" target="_blank" class="btn btn-primary">Go to
-                  Aeon Flexx CSS</a>
+                <p class="card-text">Aeon Flexx CSS is a retro-futuristic stylesheet that transforms your interface into a cyberpunk terminal.</p>
+                <a href="https://4skinskywalker.github.io/Aeon-Flexx-CSS/" target="_blank" class="btn btn-primary">Go to Aeon Flexx CSS</a>
               </div>
             </div>
           </div>
         </section>
-
+        
         <section class="languages">
           <h3 class="glitch section-title" data-text="Languages">Languages</h3>
-
+          
           <div class="languages-list">
             <div class="language-item">
               <h3>Italian</h3>
@@ -671,98 +658,98 @@ d8'    88                                 88        88                          
                 <div class="progress-bar" style="width: 100%"></div>
               </div>
             </div>
-
-            <div class="language-item">
+            
+           <div class="language-item">
               <h3>Javascript</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 98%"></div>
               </div>
             </div>
-
+  
             <div class="language-item">
               <h3>Typescript</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 95%"></div>
               </div>
             </div>
-
+  
             <div class="language-item">
               <h3>HTML</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 93%"></div>
               </div>
             </div>
-
+  
             <div class="language-item">
               <h3>CSS</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 90%"></div>
               </div>
             </div>
-
+            
             <div class="language-item">
               <h3>English</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 80%"></div>
               </div>
             </div>
-
+            
             <div class="language-item">
               <h3>Python</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 75%"></div>
               </div>
             </div>
-
+            
             <div class="language-item">
               <h3>MQL</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 65%"></div>
               </div>
             </div>
-
+            
             <div class="language-item">
               <h3>SQL</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 55%"></div>
               </div>
             </div>
-
+            
             <div class="language-item">
               <h3>Freemarker</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 50%"></div>
               </div>
             </div>
-
+            
             <div class="language-item">
               <h3>Java</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 35%"></div>
               </div>
             </div>
-
+            
             <div class="language-item">
               <h3>Turbo Pascal</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 20%"></div>
               </div>
             </div>
-
+            
             <div class="language-item">
               <h3>PHP</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 15%"></div>
               </div>
             </div>
-
+            
             <div class="language-item">
               <h3>Lisp (Racket)</h3>
               <div class="progress">
                 <div class="progress-bar" style="width: 10%"></div>
               </div>
             </div>
-
+            
             <div class="language-item">
               <h3>C</h3>
               <div class="progress">
@@ -776,6 +763,11 @@ d8'    88                                 88        88                          
   </div>
 
   <script>
+    const container = document.querySelector(".container");
+    const minAsideWidth = 20;
+    const asideWidthVar = "--aside-width";
+    const aside = document.querySelector(".aside");
+    const resizer = document.querySelector(".resizer");
     const sections = document.querySelectorAll(".nav-content > section");
     const navItems = document.querySelectorAll(".nav-item");
     let selectedTab = "experience";
@@ -798,6 +790,29 @@ d8'    88                                 88        88                          
         selectedTab = navLink.innerText.toLowerCase();
         showSelectedTab();
       });
+    });
+
+    resizer.addEventListener("mousedown", mdevt => {
+      document.body.classList.add("moving");
+      const mdx = mdevt.clientX;
+      const asideWidth = parseInt(getComputedStyle(container).getPropertyValue(asideWidthVar));
+      
+      const moveHandler = mmevt => {
+        mmevt.preventDefault();
+        const mmx = mmevt.clientX;
+        const dx = Math.round(mmx - mdx);
+        const newAsideWidth = Math.max(minAsideWidth, asideWidth + dx);
+        container.style.setProperty(asideWidthVar, newAsideWidth + "px");
+      };
+      
+      document.addEventListener("mousemove", moveHandler);
+      
+      const upHandler = () => {
+        document.body.classList.remove("moving");
+        document.removeEventListener("mousemove", moveHandler);
+        document.removeEventListener("mouseup", upHandler);
+      };
+      document.addEventListener("mouseup", upHandler);
     });
   </script>
 </body>
