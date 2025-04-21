@@ -11,6 +11,48 @@ const sections = document.querySelectorAll(".nav-content > section");
 const navItems = document.querySelectorAll(".nav-item");
 let editors = {};
 let selectedTab = "experience";
+let fileHandle;
+
+function getDoc(html) {
+    const parser = new DOMParser();
+    return parser.parseFromString(html, "text/html");
+}
+
+async function loadFile() {
+    [fileHandle] = await window.showOpenFilePicker();
+    const file = await fileHandle.getFile();
+    const contents = await file.text();
+    const doc = getDoc(contents);
+
+    const html = doc.body.innerHTML;
+    const css = doc.head.querySelector("style").innerHTML;
+    const javascript = doc.head.querySelector("script").innerHTML;
+
+    editors.html.setValue(html);
+    editors.css.setValue(css);
+    editors.javascript.setValue(javascript);
+}
+
+async function saveFile() {
+    fileHandle = await self.showSaveFilePicker({
+        suggestedName: "Untitled.html",
+        types: [{
+            description: "Html documents",
+            accept: {
+                "text/plain": [".html"],
+            },
+        }],
+    });
+}
+
+async function writeFile(contents) {
+    if (!fileHandle) {
+        return console.error("File handle not found.");
+    }
+    const writable = await fileHandle.createWritable();
+    await writable.write(contents);
+    await writable.close();
+}
 
 function debounce(callback, wait) {
     let timeoutId = null;
@@ -23,10 +65,21 @@ function debounce(callback, wait) {
 }
 
 function writeIntoIframe(html = "", css = "", js = "") {
-    const content = `<html><head><style>${css}</style></head><body>${html}<script>${js}</script></body></html>`;
+    const content = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>${css}</style>
+<script defer>${js}</script>
+</head>
+<body>${html}</body>
+</html>`;
     const iframe = document.querySelector("iframe");
     iframe.contentWindow.document.open();
     iframe.contentWindow.document.write(content);
+    writeFile(content);
     iframe.contentWindow.document.close();
 }
 

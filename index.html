@@ -130,17 +130,27 @@
 
       <div class="aside-editors">
         <div class="editor html">
-          <div class="editor-title">HTML</div>
+          <div class="editor-title">
+            <span>HTML</span>
+            <div class="editor-title-tools">
+              <button class="btn btn-primary" onClick="loadFile()">Load file</button>
+              <button class="btn btn-primary" onClick="saveFile()">Save file</button>
+            </div>
+          </div>
           <div id="html-editor"></div>
         </div>
 
         <div class="editor css">
-          <div class="editor-title">CSS</div>
+          <div class="editor-title">
+            <span>CSS</span>
+          </div>
           <div id="css-editor"></div>
         </div>
 
         <div class="editor js">
-          <div class="editor-title">JS</div>
+          <div class="editor-title">
+            <span>JS</span>
+          </div>
           <div id="js-editor"></div>
         </div>
       </div>

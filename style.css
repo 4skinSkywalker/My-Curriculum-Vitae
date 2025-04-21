@@ -42,14 +42,16 @@ body.fredopen .container {
 
 .aside .resizer {
     position: absolute;
-    top: 347px;
+    top: 339px;
     right: 0;
     z-index: 100;
-    width: 10px;
-    height: 40px;
+    width: 15px;
+    height: 55px;
     background-color: rgba(var(--primary-color), 1); 
     cursor: pointer;
     box-shadow: 0 0 15px rgba(var(--primary-color), 0.5);
+    border: 1px solid #555;
+    border-right: none;
 }
 
 .aside-default {
@@ -79,9 +81,24 @@ body.fredopen .aside-editors {
 }
 
 .editor-title {
-    padding: 0 0.25rem;
-    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    padding: 0 5px;
+    font-size: 0.9rem;
     background-color: #181818;
+    border-bottom: 2px solid #333;
+}
+
+.editor-title-tools {
+    display: flex;
+    gap: 5px;
+}
+
+.editor-title-tools .btn {
+    font-size: 0.9rem;
+    padding: 4px 8px;
 }
 
 .editor.css .editor-title,
