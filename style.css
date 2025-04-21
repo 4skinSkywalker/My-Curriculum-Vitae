@@ -5,6 +5,11 @@ body {
     transition: all 300ms ease;
 }
 
+body.noise-disabled::before {
+    width: 0;
+    height: 0;
+}
+
 body.fredopen {
     padding: 0;
     transition: all 300ms ease 200ms;
@@ -42,16 +47,27 @@ body.fredopen .container {
 
 .aside .resizer {
     position: absolute;
-    top: 339px;
+    top: 340px;
     right: 0;
     z-index: 100;
-    width: 15px;
+    width: 20px;
     height: 55px;
-    background-color: rgba(var(--primary-color), 1); 
+    background-color: rgba(var(--primary-color), 1);
     cursor: pointer;
     box-shadow: 0 0 15px rgba(var(--primary-color), 0.5);
-    border: 1px solid #555;
-    border-right: none;
+}
+
+.aside .resizer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(/drag-horizontal-icon.png);
+    background-size: 90%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .aside-default {
@@ -65,6 +81,11 @@ body.fredopen .aside-default {
 
 .aside-editors {
     display: none;
+}
+
+.aside-editors *::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
 }
 
 body.fredopen .aside-editors {
@@ -97,8 +118,8 @@ body.fredopen .aside-editors {
 }
 
 .editor-title-tools .btn {
-    font-size: 0.9rem;
-    padding: 4px 8px;
+    font-size: 0.75rem;
+    padding: 3px 6px;
 }
 
 .editor.css .editor-title,
@@ -255,6 +276,7 @@ section .section-title {
 .artdeco-image {
     font-size: 0.25rem;
     line-height: 1;
+    font-weight: 500;
 }
 
 .artdeco-role {
@@ -290,6 +312,7 @@ section .section-title {
 .projects-list .card-title {
     font-size: 0.25rem;
     height: 31px;
+    font-weight: 700;
 }
 
 .projects-list a {

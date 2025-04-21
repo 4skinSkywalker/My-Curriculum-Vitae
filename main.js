@@ -139,8 +139,10 @@ initEditor("js-editor", "javascript");
 function showSelectedTab() {
     if (selectedTab === "fredopen") {
         document.body.classList.add("fredopen");
+        document.body.classList.add("noise-disabled");
     } else {
         document.body.classList.remove("fredopen");
+        document.body.classList.remove("noise-disabled");
     }
     sections.forEach(el => el.style.display = "none");
     const section = document.querySelector(".nav-content > section." + selectedTab);
