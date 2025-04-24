@@ -58,9 +58,7 @@ window.onload = () => {
     
     function songFinish() {
         pause();
-        playtime = 0;
-        playtimeLabel.innerHTML = getTimeLabel(playtime);
-        audio.currentTime = 0;
+        resetPlaytime();
         if (!isRepeatActive) {
             next();
         }
@@ -140,22 +138,26 @@ window.onload = () => {
         const ss = Math.floor(time - (mm * 60));
         return  mm + ":" + ss.toString().padStart(2, "0");
     }
+
+    function resetPlaytime() {
+        audio.currentTime = 0;
+        playtime = 0;
+        playtimeLabel.innerHTML = getTimeLabel(playtime);
+        progressBar.style.width = "0%";
+    }
     
     function loadAudio(options) {
         audio.src = options.src;
         audio.load();
         audio.onloadedmetadata = () => {
-            playtime = 0;
-            playtimeLabel.innerHTML = getTimeLabel(playtime);
+            resetPlaytime();
             duration = audio.duration;
             durationLabel.innerHTML = getTimeLabel(duration);
             if (options.title) title.innerHTML = options.title;
             if (options.artist) artist.innerHTML = options.artist;
             if (isPlaying) {
                 pause();
-                playtime = 0;
-                playtimeLabel.innerHTML = getTimeLabel(playtime);
-                audio.currentTime = 0;
+                resetPlaytime();
                 setTimeout(play, 1150);
             }
         };
