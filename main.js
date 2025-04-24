@@ -38,17 +38,13 @@ async function saveFile() {
         suggestedName: "Untitled.html",
         types: [{
             description: "Html documents",
-            accept: {
-                "text/plain": [".html"],
-            },
-        }],
+            accept: { "text/plain": [".html"] }
+        }]
     });
+    writeFile(getHtml());
 }
 
 async function writeFile(contents) {
-    if (!fileHandle) {
-        return console.error("File handle not found.");
-    }
     const writable = await fileHandle.createWritable();
     await writable.write(contents);
     await writable.close();
@@ -64,22 +60,29 @@ function debounce(callback, wait) {
     };
 }
 
-function writeIntoIframe(html = "", css = "", js = "") {
-    const content = `<!DOCTYPE html>
+function getHtml() {
+    const html = editors.html ? editors.html.getSession().getValue() : "";
+    const css = editors.css ? editors.css.getSession().getValue() : "";
+    const javascript = editors.javascript ? editors.javascript.getSession().getValue() : "";
+    return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <style>${css}</style>
-<script defer>${js}</script>
+<scr${""}ipt defer>${javascript}</scr${""}ipt>
 </head>
 <body>${html}</body>
 </html>`;
+}
+
+function writeIntoIframe() {
+    const content = getHtml();
+    writeFile(content);
     const iframe = document.querySelector("iframe");
     iframe.contentWindow.document.open();
     iframe.contentWindow.document.write(content);
-    writeFile(content);
     iframe.contentWindow.document.close();
 }
 
@@ -103,11 +106,7 @@ function initEditor(targetId, mode = "html") {
     editors[mode].getSession().setMode("ace/mode/" + mode);
 
     editors[mode].getSession().on("change", debounce(() => {
-        writeIntoIframe(
-            editors.html ? editors.html.getSession().getValue() : "",
-            editors.css ? editors.css.getSession().getValue() : "",
-            editors.javascript ? editors.javascript.getSession().getValue() : ""
-        );
+        writeIntoIframe();
         localStorage.setItem(`last-editor-${mode}`, editors[mode].getSession().getValue());
     }, 500));
 
