@@ -33,11 +33,13 @@
   <link rel="stylesheet" href="https://4skinSkywalker.github.io/Assets-for-my-Codepen/reset.css">
   <link rel="stylesheet" href="https://4skinSkywalker.github.io/Aeon-Flexx-CSS/aeon-flexx.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="music-player.css">
   
   <script src="/ace/ace.js" defer></script>
   <script src="/ace/ext-language_tools.js" defer></script>
   <script src="/ace/ext-emmet.js" defer></script>
   <script src="main.js" defer></script>
+  <script src="music-player.js" defer></script>
   <script src="https://4skinSkywalker.github.io/Aeon-Flexx-CSS/aeon-flexx.js" defer></script>
 </head>
 
@@ -578,6 +580,55 @@ d8'    88                                 88        88                          
         </section>
       </div>
     </main>
+  </div>
+
+  <div class="muspla">
+    <input type="checkbox" id="muspla-trigger" hidden>
+    <label for="muspla-trigger" class="muspla-slideout-trigger">
+      <div>Music player <i class="bi bi-arrow-bar-down"></i></div>
+    </label>
+
+    <input type="file" accept="audio/*" hidden />
+    <canvas></canvas>
+    <audio preload="metadata" autostart="0" autostart="false" hidden></audio>
+
+    <div class="muspla-row1">
+      <div class="muspla-title">
+        <a href="#">Title</a>
+      </div>
+      <div class="muspla-artist">
+        <a href="#">Artist</a>
+      </div>
+    </div>
+
+    <div class="muspla-row2">
+      <div class="muspla-playtime">0:00</div>
+      <div class="muspla-progress progress">
+        <div class="progress-bar" style="width: 0%"></div>
+      </div>
+      <div class="muspla-duration">0:00</div>
+    </div>
+
+    <div class="muspla-row3">
+      <div class="muspla-shuffle muspla-btn-inactive">
+        <i class="bi bi-shuffle"></i>
+      </div>
+      <div class="muspla-backward">
+        <i class="bi bi-skip-backward-fill"></i>
+      </div>
+      <div class="muspla-play">
+        <i class="bi bi-play-circle-fill"></i>
+      </div>
+      <div class="muspla-pause" hidden>
+        <i class="bi bi-pause-circle-fill"></i>
+      </div>
+      <div class="muspla-forward">
+        <i class="bi bi-skip-forward-fill"></i>
+      </div>
+      <div class="muspla-repeat muspla-btn-inactive">
+        <i class="bi bi-repeat"></i>
+      </div>
+    </div>
   </div>
 </body>
 

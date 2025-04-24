@@ -1,0 +1,126 @@
+
+.muspla {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    width: calc(100% - 30px);
+    max-width: 360px;
+    padding: 20px 30px;
+    text-transform: uppercase;
+    background-color: #1118;
+    border: 2px solid rgba(var(--primary-color), 1);
+    box-shadow: 0 0 15px rgba(var(--primary-color), 0.5);
+    backdrop-filter: blur(4px);
+    transition: all 400ms ease;
+}
+
+.muspla:has(input[type="checkbox"]:not(:checked)) {
+    translate: calc(100% + 15px);
+}
+
+.muspla-slideout-trigger {
+    position: absolute;
+    right: calc(100% + 6px);
+    top: 0;
+    height: 100%;
+    width: 30px;
+    background-color: rgba(var(--primary-color), 1);
+    color: #000;
+    cursor: pointer;
+}
+
+.muspla-slideout-trigger:hover {
+    opacity: 0.85;
+}
+
+.muspla-slideout-trigger > * {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    rotate: 90deg;
+    translate: -50% -50%;
+    white-space: nowrap;
+}
+
+.muspla > canvas {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.muspla > video,
+.muspla-video-blender {
+    position: absolute;
+    top: 0;
+    right: 0;
+    aspect-ratio: 1 / 1;
+    height: 50%;
+}
+
+.muspla-row1 a {
+    all: unset;
+    display: inline-block;
+    line-height: 1;
+    padding: 2px 4px;
+    cursor: pointer;
+}
+
+.muspla-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+
+.muspla-artist {
+    font-size: 0.85rem;
+}
+
+.muspla-row2 {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.muspla-row2 > * {
+    flex: 0 1 auto;
+}
+
+.muspla-progress {
+    flex-grow: 1;
+    height: 10px;
+    cursor: pointer;
+}
+
+.muspla-row3 {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    place-items: center;
+}
+
+.muspla-row3 > * {
+    cursor: pointer;
+}
+
+.muspla-play, .muspla-pause {
+    grid-area: 1 / 3 / 1 / 4;
+}
+
+.muspla-shuffle i, .muspla-repeat i {
+    font-size: 1.15rem;
+}
+
+.muspla-backward i, .muspla-forward i {
+    font-size: 1.5rem;
+}
+
+.muspla-play i, .muspla-pause i {
+    font-size: 2rem;
+}
+
+.muspla-btn-inactive {
+    opacity: 0.5;
+}
