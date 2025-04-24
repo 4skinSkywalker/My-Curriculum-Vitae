@@ -9,6 +9,7 @@ const cssEditor = document.querySelector(".editor.css");
 const jsEditor = document.querySelector(".editor.js");
 const sections = document.querySelectorAll(".nav-content > section");
 const navItems = document.querySelectorAll(".nav-item");
+const fredopenSection = document.querySelector("section.fredopen");
 let editors = {};
 let selectedTab = "experience";
 let fileHandle;
@@ -45,6 +46,9 @@ async function saveFile() {
 }
 
 async function writeFile(contents) {
+    if (!fileHandle) {
+        return;
+    }
     const writable = await fileHandle.createWritable();
     await writable.write(contents);
     await writable.close();
@@ -71,7 +75,7 @@ function getHtml() {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <style>${css}</style>
-<scr${""}ipt defer>${javascript}</scr${""}ipt>
+<scr${""}ipt defer>window.onload = () => {${javascript}};</scr${""}ipt>
 </head>
 <body>${html}</body>
 </html>`;
@@ -80,7 +84,11 @@ function getHtml() {
 function writeIntoIframe() {
     const content = getHtml();
     writeFile(content);
-    const iframe = document.querySelector("iframe");
+
+    const iframe = document.createElement("IFRAME");
+    fredopenSection.innerHTML = "";
+    fredopenSection.appendChild(iframe);
+
     iframe.contentWindow.document.open();
     iframe.contentWindow.document.write(content);
     iframe.contentWindow.document.close();
