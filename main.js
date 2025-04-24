@@ -135,6 +135,11 @@ initEditor("html-editor", "html");
 initEditor("css-editor", "css");
 initEditor("js-editor", "javascript");
 
+function openFredopen() {
+    selectedTab = "fredopen";
+    showSelectedTab();
+}
+
 function showSelectedTab() {
     if (selectedTab === "fredopen") {
         document.body.classList.add("fredopen");
