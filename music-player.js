@@ -64,7 +64,7 @@ window.onload = () => {
         if (!isRepeatActive) {
             next();
         }
-        setTimeout(play, 2000);
+        setTimeout(play, 1150);
     }
     
     function play() {
@@ -151,7 +151,13 @@ window.onload = () => {
             durationLabel.innerHTML = getTimeLabel(duration);
             if (options.title) title.innerHTML = options.title;
             if (options.artist) artist.innerHTML = options.artist;
-            if (isPlaying) play();
+            if (isPlaying) {
+                pause();
+                playtime = 0;
+                playtimeLabel.innerHTML = getTimeLabel(playtime);
+                audio.currentTime = 0;
+                setTimeout(play, 1150);
+            }
         };
         
         if (!audioSource) {
