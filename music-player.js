@@ -50,13 +50,12 @@ window.onload = () => {
     const shuffleBtn = document.querySelector(".muspla-shuffle");
     const repeatBtn = document.querySelector(".muspla-repeat");
     let firstTime = true;
-    let audio;
+    let timer, audio, unsubscribeAnimationFrame;
     let music = deepCopy(originalMusic);
     let musicIndex = 0;
     let isPlaying = false;
     let duration = 0;
     let playtime = 0;
-    let timer;
     let isShuffleActive = false;
     let isRepeatActive = false;
 
@@ -208,6 +207,11 @@ window.onload = () => {
     }
     
     function loadAudio(options) {
+        if (unsubscribeAnimationFrame) {
+            unsubscribeAnimationFrame();
+            unsubscribeAnimationFrame = null;
+        }
+        
         audio = new Audio(options.src);
         audio.src = options.src;
         audio.load();
@@ -226,27 +230,20 @@ window.onload = () => {
         const { audioAnalyser } = initAudioAnalyzer(audio);
     
         const ctx = canvas.getContext("2d");
-        
-        audioAnalyser.fftSize = 256;
-        
-        const bufferLength = audioAnalyser.frequencyBinCount;
-        
-        const dataArray = new Uint8Array(bufferLength);
-        
         const { width: WIDTH, height: HEIGHT } = canvas.getBoundingClientRect();
         
+        audioAnalyser.fftSize = 256;
+        const bufferLength = audioAnalyser.frequencyBinCount;
+        const dataArray = new Uint8Array(bufferLength);
         const barWidth = (WIDTH / bufferLength) * 2.5;
         let barHeight;
         let x = 0;
+        let doNotRenewAnimationFrame = false;
         
         function renderFrame() {
-            requestAnimationFrame(renderFrame);
-            
-            x = 0;
-            
-            audioAnalyser.getByteFrequencyData(dataArray);
-            
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
+            x = 0;
+            audioAnalyser.getByteFrequencyData(dataArray);
             
             for (let i = 0; i < bufferLength; i++) {
                 barHeight = dataArray[i] * 0.33;
@@ -254,9 +251,20 @@ window.onload = () => {
                 ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
                 x += barWidth + 1;
             }
+
+            if (doNotRenewAnimationFrame) {
+                console.log("Animation frame not renewed.");
+                return
+            }
+
+            requestAnimationFrame(renderFrame);
         };
         
         renderFrame();
+
+        unsubscribeAnimationFrame = () => {
+            doNotRenewAnimationFrame = true;
+        };
     }
     
     backward.addEventListener("click", previousTrack);
