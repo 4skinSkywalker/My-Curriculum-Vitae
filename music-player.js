@@ -30,7 +30,6 @@ window.onload = () => {
     const shuffleBtn = document.querySelector(".muspla-shuffle");
     const repeatBtn = document.querySelector(".muspla-repeat");
     let audio;
-    let firstTime = true;
     let music = deepCopy(originalMusic);
     let musicIndex = 0;
     let isPlaying = false;
