@@ -16,8 +16,6 @@ window.onload = () => {
             src: "/music/Kid2Will_Kid2Will.mp3"
         },
     ];
-    const file = document.querySelector('.muspla > input[type="file"]');
-    const audio = document.querySelector(".muspla > audio");
     const canvas = document.querySelector(".muspla > canvas");
     const title = document.querySelector(".muspla-title");
     const artist = document.querySelector(".muspla-artist");
@@ -31,8 +29,8 @@ window.onload = () => {
     const pauseBtn = document.querySelector(".muspla-pause");
     const shuffleBtn = document.querySelector(".muspla-shuffle");
     const repeatBtn = document.querySelector(".muspla-repeat");
-    let audioContext, audioSource, audioAnalyser;
-    let music = JSON.parse(JSON.stringify(originalMusic));
+    let audio;
+    let music = deepCopy(originalMusic);
     let musicIndex = 0;
     let isPlaying = false;
     let duration = 0;
@@ -40,8 +38,10 @@ window.onload = () => {
     let timer;
     let isShuffleActive = false;
     let isRepeatActive = false;
-    
-    loadAudio(music[musicIndex]);
+
+    function deepCopy(obj) {
+        return JSON.parse(JSON.stringify(obj));
+    }
     
     function shuffle(array) {
         var tmp, current, top = array.length;
@@ -60,25 +60,33 @@ window.onload = () => {
         pause();
         resetPlaytime();
         if (!isRepeatActive) {
-            next();
+            nextTrack();
         }
-        setTimeout(play, 1150);
+        setTimeout(play, 1000);
     }
     
     function play() {
+        audio.addEventListener("play", () => {
+            isPlaying = true;
+
+            timer = setInterval(() => {
+                playtime += 0.5;
+                const percent = 100 * playtime / duration;
+                if (percent >= 100) {
+                    songFinish();
+                }
+                progressBar.style.width = percent + "%";
+                playtimeLabel.innerHTML = getTimeLabel(playtime);
+            }, 500);
+        });
         audio.play();
-        isPlaying = true;
-        timer = setInterval(() => {
-            playtime++;
-            const percent = 100 * playtime / duration;
-            if (percent >= 100) {
-                songFinish();
-            }
-            progressBar.style.width = percent + "%";
-            playtimeLabel.innerHTML = getTimeLabel(playtime);
-        }, 1000);
         playBtn.setAttribute("hidden", "");
         pauseBtn.removeAttribute("hidden");
+    }
+
+    function loadAndPlay() {
+        loadAudio(music[musicIndex]);
+        play();
     }
     
     function pause() {
@@ -88,23 +96,25 @@ window.onload = () => {
         pauseBtn.setAttribute("hidden", "");
         playBtn.removeAttribute("hidden");
     }
-    
-    function previous() {
-        if (musicIndex === 1) {
+
+    function previousTrack() {
+        if (musicIndex === 0) {
             musicIndex = music.length - 1;
         } else {
             musicIndex--;
         }
-        loadAudio(music[musicIndex]);
+        pause();
+        loadAndPlay();
     }
-    
-    function next() {
+
+    function nextTrack() {
         if (musicIndex === music.length - 1) {
             musicIndex = 0;
         } else {
             musicIndex++;
         }
-        loadAudio(music[musicIndex]);
+        pause();
+        loadAndPlay();
     }
     
     function shuffleBtnHandler() {
@@ -113,7 +123,7 @@ window.onload = () => {
         if (isShuffleActive) {
             music = shuffle(originalMusic);
         } else {
-            music = JSON.parse(JSON.stringify(originalMusic));
+            music = deepCopy(originalMusic);
         }
     }
     
@@ -145,37 +155,46 @@ window.onload = () => {
         playtimeLabel.innerHTML = getTimeLabel(playtime);
         progressBar.style.width = "0%";
     }
+
+    function initAudioAnalyzer(audio) {
+        const audioContext = new AudioContext();
+
+        const audioSource = audioContext.createMediaElementSource(audio);
+        const audioAnalyser = audioContext.createAnalyser();
+
+        audioSource.connect(audioAnalyser);
+        audioAnalyser.connect(audioContext.destination);
+
+        window.lastAudioContext = audioContext;
+        window.lastAudioSource = audioSource;
+        window.lastAudioAnalyser = audioAnalyser;
+
+        return { audioContext, audioSource, audioAnalyser };
+    }
     
     function loadAudio(options) {
+        audio = new Audio(options.src);
         audio.src = options.src;
         audio.load();
         audio.onloadedmetadata = () => {
             resetPlaytime();
             duration = audio.duration;
             durationLabel.innerHTML = getTimeLabel(duration);
-            if (options.title) title.innerHTML = options.title;
-            if (options.artist) artist.innerHTML = options.artist;
-            if (isPlaying) {
-                pause();
-                resetPlaytime();
-                setTimeout(play, 1150);
+            if (options.title) {
+                title.innerHTML = options.title;
+            }
+            if (options.artist) {
+                artist.innerHTML = options.artist;
             }
         };
         
-        if (!audioSource) {
-            audioContext = new AudioContext();
-            audioSource = audioContext.createMediaElementSource(audio);
-            audioAnalyser = audioContext.createAnalyser();
-            audioSource.connect(audioAnalyser);
-            audioAnalyser.connect(audioContext.destination);
-        }
+        const { audioAnalyser } = initAudioAnalyzer(audio);
     
         const ctx = canvas.getContext("2d");
         
         audioAnalyser.fftSize = 256;
         
         const bufferLength = audioAnalyser.frequencyBinCount;
-        console.log(bufferLength);
         
         const dataArray = new Uint8Array(bufferLength);
         
@@ -205,16 +224,11 @@ window.onload = () => {
         renderFrame();
     }
     
-    file.onchange = () => {
-        const files = file.files;
-        loadAudio({ src: URL.createObjectURL(files[0]) });
-    };
-    
-    backward.addEventListener("click", previous);
-    forward.addEventListener("click", next);
-    playBtn.addEventListener("click", play);
+    backward.addEventListener("click", previousTrack);
+    forward.addEventListener("click", nextTrack);
+    playBtn.addEventListener("click", loadAndPlay);
     pauseBtn.addEventListener("click", pause);
     shuffleBtn.addEventListener("click", shuffleBtnHandler);
     repeatBtn.addEventListener("click", repeatBtnHandler);
     progress.addEventListener("click", progressClickHandler);
-};    
+};
