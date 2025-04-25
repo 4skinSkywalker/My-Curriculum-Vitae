@@ -99,9 +99,20 @@ function initEditor(targetId, mode = "html") {
     editors[mode].setTheme("ace/theme/monokai");
 
     ace.require("ace/ext/emmet").setCore("ext/emmet_core");
-    ace.config.loadModule("ace/snippets/html", () => console.log("HTML snippets loaded."));
-    ace.config.loadModule("ace/snippets/css", () => console.log("CSS snippets loaded."));
-    ace.config.loadModule("ace/snippets/javascript", () => console.log("CSS snippets loaded."));
+    switch(mode) {
+        case "html": {
+            ace.config.loadModule("ace/snippets/html", () => console.log("HTML snippets loaded."));
+            break;
+        }
+        case "css": {
+            ace.config.loadModule("ace/snippets/css", () => console.log("CSS snippets loaded."));
+            break;
+        }
+        case "javascript": {
+            ace.config.loadModule("ace/snippets/javascript", () => console.log("JS snippets loaded."));
+            break;
+        }
+    }
 
     editors[mode].setOptions({
         enableBasicAutocompletion: true,

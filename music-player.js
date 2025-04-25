@@ -30,6 +30,7 @@ window.onload = () => {
     const shuffleBtn = document.querySelector(".muspla-shuffle");
     const repeatBtn = document.querySelector(".muspla-repeat");
     let audio;
+    let firstTime = true;
     let music = deepCopy(originalMusic);
     let musicIndex = 0;
     let isPlaying = false;
@@ -55,6 +56,14 @@ window.onload = () => {
     
         return array;
     }
+
+    function addEventListenerOnce(el, evt, cb) {
+        const cbWrap = () => {
+            cb();
+            el.removeEventListener(evt, cbWrap);
+        }
+        el.addEventListener(evt, cbWrap);
+    };
     
     function songFinish() {
         pause();
@@ -66,9 +75,8 @@ window.onload = () => {
     }
     
     function play() {
-        audio.addEventListener("play", () => {
+        addEventListenerOnce(audio, "play", () => {
             isPlaying = true;
-
             timer = setInterval(() => {
                 playtime += 0.5;
                 const percent = 100 * playtime / duration;
@@ -84,8 +92,10 @@ window.onload = () => {
         pauseBtn.removeAttribute("hidden");
     }
 
-    function loadAndPlay() {
-        loadAudio(music[musicIndex]);
+    function playBtnHandler() {
+        if (!audio) {
+            loadAudio(music[musicIndex]);
+        }
         play();
     }
     
@@ -104,7 +114,8 @@ window.onload = () => {
             musicIndex--;
         }
         pause();
-        loadAndPlay();
+        loadAudio(music[musicIndex]);
+        play();
     }
 
     function nextTrack() {
@@ -114,7 +125,8 @@ window.onload = () => {
             musicIndex++;
         }
         pause();
-        loadAndPlay();
+        loadAudio(music[musicIndex]);
+        play();
     }
     
     function shuffleBtnHandler() {
@@ -226,7 +238,7 @@ window.onload = () => {
     
     backward.addEventListener("click", previousTrack);
     forward.addEventListener("click", nextTrack);
-    playBtn.addEventListener("click", loadAndPlay);
+    playBtn.addEventListener("click", playBtnHandler);
     pauseBtn.addEventListener("click", pause);
     shuffleBtn.addEventListener("click", shuffleBtnHandler);
     repeatBtn.addEventListener("click", repeatBtnHandler);
