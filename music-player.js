@@ -15,6 +15,26 @@ window.onload = () => {
             artist: "Kid2Will",
             src: "/music/Kid2Will_Kid2Will.mp3"
         },
+        {
+            title: "The Highest Horizon",
+            artist: "Kid2Will",
+            src: "/music/Highest-Horizon_Kid2Will.mp3"
+        },
+        {
+            title: "Fire Aura",
+            artist: "Kid2Will",
+            src: "/music/Fire-Aura_Kid2Will.mp3"
+        },
+        {
+            title: "Frozen Fog",
+            artist: "Kid2Will",
+            src: "/music/Frozen-Fog_Kid2Will.mp3"
+        },
+        {
+            title: "The Power Within",
+            artist: "Kid2Will",
+            src: "/music/Power-Within_Kid2Will.mp3"
+        },
     ];
     const canvas = document.querySelector(".muspla > canvas");
     const title = document.querySelector(".muspla-title");
@@ -29,6 +49,7 @@ window.onload = () => {
     const pauseBtn = document.querySelector(".muspla-pause");
     const shuffleBtn = document.querySelector(".muspla-shuffle");
     const repeatBtn = document.querySelector(".muspla-repeat");
+    let firstTime = true;
     let audio;
     let music = deepCopy(originalMusic);
     let musicIndex = 0;
@@ -39,12 +60,14 @@ window.onload = () => {
     let isShuffleActive = false;
     let isRepeatActive = false;
 
+    loadAudio(music[musicIndex]);
+
     function deepCopy(obj) {
         return JSON.parse(JSON.stringify(obj));
     }
     
     function shuffle(array) {
-        var tmp, current, top = array.length;
+        let tmp, current, top = array.length;
     
         if(top) while(--top) {
             current = Math.floor(Math.random() * (top + 1));
@@ -92,9 +115,10 @@ window.onload = () => {
     }
 
     function playBtnHandler() {
-        if (!audio) {
+        if (firstTime) {
             loadAudio(music[musicIndex]);
         }
+        firstTime = false;
         play();
     }
     

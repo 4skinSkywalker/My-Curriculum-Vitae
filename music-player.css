@@ -4,8 +4,8 @@
     bottom: 15px;
     right: 15px;
     width: calc(100% - 30px);
-    max-width: 360px;
-    padding: 20px 30px;
+    max-width: 320px;
+    padding: 15px 20px;
     text-transform: uppercase;
     background-color: #1118;
     border: 2px solid rgba(var(--primary-color), 1);
