@@ -234,6 +234,7 @@ body.fredopen .header .divider {
     background-size: cover;
     aspect-ratio: 1 / 1;
     transition: left linear;
+    transition-delay: 1s;
     z-index: 1;
 }
 

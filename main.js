@@ -19,7 +19,6 @@ let fileHandle;
 function catWalk() {
     const { width } = catContainer.getBoundingClientRect();
     cat.style.transitionDuration = (width / 45) + "s";
-    cat.style.transitionDelay = 3 + (Math.random() * 7) + "s";
     cat.style.left = width + "px";
 }
 
@@ -172,6 +171,11 @@ function showSelectedTab() {
         document.body.classList.remove("fredopen");
         document.body.classList.remove("noise-disabled");
     }
+
+    if (selectedTab === "projects") {
+        catWalk();
+    }
+
     sections.forEach(el => el.style.display = "none");
     const section = document.querySelector(".nav-content > section." + selectedTab);
     section.style.display = "block";
@@ -224,8 +228,6 @@ function drag(options) {
             showSelectedTab();
         });
     });
-
-    catWalk();
 
     drag({
         target: resizer,
