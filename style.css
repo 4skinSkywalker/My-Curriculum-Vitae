@@ -275,7 +275,7 @@ section .section-title {
 }
 
 .artdeco-image {
-    font-size: 0.25rem;
+    font-size: 0.4rem;
     line-height: 1;
     font-weight: 500;
 }
@@ -311,8 +311,8 @@ section .section-title {
 }
 
 .projects-list .card-title {
-    font-size: 0.25rem;
-    height: 31px;
+    font-size: 0.4rem;
+    height: 67px;
     font-weight: 700;
 }
 
@@ -368,6 +368,7 @@ section.fredopen iframe {
     
     .projects .card-title {
         font-size: 0.2rem;
+        height: 34px;
     }
     
     .header h2 {
