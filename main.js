@@ -18,7 +18,7 @@ let fileHandle;
 
 function catWalk() {
     const { width } = catContainer.getBoundingClientRect();
-    cat.style.transitionDuration = (width / 45) + "s";
+    cat.style.transitionDuration = (width / 40) + "s";
     cat.style.left = width + "px";
 }
 
