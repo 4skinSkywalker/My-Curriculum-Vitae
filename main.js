@@ -10,9 +10,18 @@ const jsEditor = document.querySelector(".editor.js");
 const sections = document.querySelectorAll(".nav-content > section");
 const navItems = document.querySelectorAll(".nav-item");
 const fredopenSection = document.querySelector("section.fredopen");
+const catContainer = document.querySelector(".cat-container");
+const cat = document.querySelector(".cat");
 let editors = {};
 let selectedTab = "experience";
 let fileHandle;
+
+function catWalk() {
+    const { width } = catContainer.getBoundingClientRect();
+    cat.style.transitionDuration = (width / 45) + "s";
+    cat.style.transitionDelay = 3 + (Math.random() * 7) + "s";
+    cat.style.left = width + "px";
+}
 
 function getDoc(html) {
     const parser = new DOMParser();
@@ -150,10 +159,6 @@ function initEditor(targetId, mode = "html") {
     }
 }
 
-initEditor("html-editor", "html");
-initEditor("css-editor", "css");
-initEditor("js-editor", "javascript");
-
 function openFredopen() {
     selectedTab = "fredopen";
     showSelectedTab();
@@ -174,17 +179,6 @@ function showSelectedTab() {
     const navItem = document.querySelector(".nav-item." + selectedTab);
     navItem.classList.add("active");
 }
-
-showSelectedTab();
-
-navItems.forEach(navItem => {
-    const navLink = navItem.querySelector(".nav-link");
-    navLink.addEventListener("click", evt => {
-        evt.preventDefault();
-        selectedTab = navLink.innerText.toLowerCase();
-        showSelectedTab();
-    });
-});
 
 function drag(options) {
     let { target, downCb, moveCb, upCb, ctx, direction } = options;
@@ -215,43 +209,62 @@ function drag(options) {
     });
 }
 
-drag({
-    target: resizer,
-    downCb: (evt, ctx) => {
-        ctx.asideWidth = parseInt(getComputedStyle(container).getPropertyValue(asideWidthVar));
-    },
-    moveCb: (evt, ctx) => {
-        const newAsideWidth = Math.max(minAsideWidth, ctx.asideWidth + ctx.pos);
-        container.style.setProperty(asideWidthVar, newAsideWidth + "px");
-    }
-});
+(function init() {
+    initEditor("html-editor", "html");
+    initEditor("css-editor", "css");
+    initEditor("js-editor", "javascript");
 
-drag({
-    target: cssEditor.querySelector(".editor-title"),
-    downCb: (evt, ctx) => {
-        ctx.htmlEditorHeight = htmlEditor.clientHeight;
-        ctx.cssEditorHeight = cssEditor.clientHeight;
-        ctx.jsEditorHeight = jsEditor.clientHeight;
-    },
-    moveCb: (evt, ctx) => {
-        const htmlEditorHeight = (ctx.htmlEditorHeight + ctx.pos) + "px";
-        const cssEditorHeight = (ctx.cssEditorHeight - ctx.pos) + "px";
-        asideEditors.style.gridTemplateRows = `${htmlEditorHeight} ${cssEditorHeight} ${ctx.jsEditorHeight}px`;
-    },
-    direction: "y"
-});
+    showSelectedTab();
 
-drag({
-    target: jsEditor.querySelector(".editor-title"),
-    downCb: (evt, ctx) => {
-        ctx.htmlEditorHeight = htmlEditor.clientHeight;
-        ctx.cssEditorHeight = cssEditor.clientHeight;
-        ctx.jsEditorHeight = jsEditor.clientHeight;
-    },
-    moveCb: (evt, ctx) => {
-        const cssEditorHeight = (ctx.cssEditorHeight + ctx.pos) + "px";
-        const jsEditorHeight = (ctx.jsEditorHeight - ctx.pos) + "px";
-        asideEditors.style.gridTemplateRows = `${ctx.htmlEditorHeight}px ${cssEditorHeight} ${jsEditorHeight}`;
-    },
-    direction: "y"
-});
+    navItems.forEach(navItem => {
+        const navLink = navItem.querySelector(".nav-link");
+        navLink.addEventListener("click", evt => {
+            evt.preventDefault();
+            selectedTab = navLink.innerText.toLowerCase();
+            showSelectedTab();
+        });
+    });
+
+    catWalk();
+
+    drag({
+        target: resizer,
+        downCb: (evt, ctx) => {
+            ctx.asideWidth = parseInt(getComputedStyle(container).getPropertyValue(asideWidthVar));
+        },
+        moveCb: (evt, ctx) => {
+            const newAsideWidth = Math.max(minAsideWidth, ctx.asideWidth + ctx.pos);
+            container.style.setProperty(asideWidthVar, newAsideWidth + "px");
+        }
+    });
+    
+    drag({
+        target: cssEditor.querySelector(".editor-title"),
+        downCb: (evt, ctx) => {
+            ctx.htmlEditorHeight = htmlEditor.clientHeight;
+            ctx.cssEditorHeight = cssEditor.clientHeight;
+            ctx.jsEditorHeight = jsEditor.clientHeight;
+        },
+        moveCb: (evt, ctx) => {
+            const htmlEditorHeight = (ctx.htmlEditorHeight + ctx.pos) + "px";
+            const cssEditorHeight = (ctx.cssEditorHeight - ctx.pos) + "px";
+            asideEditors.style.gridTemplateRows = `${htmlEditorHeight} ${cssEditorHeight} ${ctx.jsEditorHeight}px`;
+        },
+        direction: "y"
+    });
+    
+    drag({
+        target: jsEditor.querySelector(".editor-title"),
+        downCb: (evt, ctx) => {
+            ctx.htmlEditorHeight = htmlEditor.clientHeight;
+            ctx.cssEditorHeight = cssEditor.clientHeight;
+            ctx.jsEditorHeight = jsEditor.clientHeight;
+        },
+        moveCb: (evt, ctx) => {
+            const cssEditorHeight = (ctx.cssEditorHeight + ctx.pos) + "px";
+            const jsEditorHeight = (ctx.jsEditorHeight - ctx.pos) + "px";
+            asideEditors.style.gridTemplateRows = `${ctx.htmlEditorHeight}px ${cssEditorHeight} ${jsEditorHeight}`;
+        },
+        direction: "y"
+    });
+})();
