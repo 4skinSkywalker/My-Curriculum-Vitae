@@ -358,6 +358,10 @@ section.fredopen iframe {
 }
 
 @media (max-width: 576px) {
+    body {
+        padding: 0;
+    }
+
     .artdeco {
         grid-template-columns: 1fr;
     }
