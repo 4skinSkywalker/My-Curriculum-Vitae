@@ -250,6 +250,7 @@ body.fredopen .nav {
     margin-inline: 0;
     width: 130px;
     text-align: center;
+    background-color: #0006;
 }
 
 .nav-item.active {
