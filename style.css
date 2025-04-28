@@ -177,7 +177,6 @@ body.fredopen .aside-editors {
 body.fredopen .header {
     padding: 0;
     max-height: 0;
-    margin-bottom: 10px;
     transition: all 300ms ease 200ms;
 }
 
@@ -217,7 +216,11 @@ body.fredopen .header .divider {
     background-size: 175%;
     background-position: bottom center;
     background-repeat: repeat-x;
-    padding-top: 1.5rem;
+    padding-top: 15px;
+}
+
+body.fredopen .nav {
+    padding-top: 10px;
 }
 
 .cat-container {
