@@ -18,8 +18,9 @@ let fileHandle;
 
 function catWalk() {
     const { width } = catContainer.getBoundingClientRect();
-    cat.style.transitionDuration = (width / 40) + "s";
-    cat.style.left = width + "px";
+    const left = width + 60;
+    cat.style.transitionDuration = (left / 40) + "s";
+    cat.style.left = left + "px";
 }
 
 function getDoc(html) {
