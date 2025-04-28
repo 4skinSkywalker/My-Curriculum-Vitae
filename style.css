@@ -167,7 +167,7 @@ body.fredopen .aside-editors {
     position: relative;
     text-transform: uppercase;
     padding-block: 3rem;
-    margin-bottom: 1.5rem;
+    background: linear-gradient(180deg, #2e1b00, #f902);
     text-align: center;
     overflow: hidden;
     max-height: 320px;
@@ -213,6 +213,11 @@ body.fredopen .header .divider {
 .nav {
     position: relative;
     justify-content: center;
+    background: linear-gradient(#f902, #f902), url(/footer-skyline.webp);
+    background-size: 175%;
+    background-position: bottom center;
+    background-repeat: repeat-x;
+    padding-top: 1.5rem;
 }
 
 .cat-container {
