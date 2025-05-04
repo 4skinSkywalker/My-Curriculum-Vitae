@@ -3,37 +3,72 @@ window.onload = () => {
         {
             title: "Night Sky",
             artist: "Kid2Will",
-            src: "/music/Night-Sky_Kid2Will.mp3"
+            src: "/music/Kid2Will/Night-Sky_Kid2Will.mp3"
         },
         {
             title: "Azarian Fire",
             artist: "Kid2Will",
-            src: "/music/Azarian-Fire_Kid2Will.mp3"
+            src: "/music/Kid2Will/Azarian-Fire_Kid2Will.mp3"
         },
         {
             title: "Kid2Will",
             artist: "Kid2Will",
-            src: "/music/Kid2Will_Kid2Will.mp3"
+            src: "/music/Kid2Will/Kid2Will_Kid2Will.mp3"
         },
         {
             title: "The Highest Horizon",
             artist: "Kid2Will",
-            src: "/music/Highest-Horizon_Kid2Will.mp3"
+            src: "/music/Kid2Will/Highest-Horizon_Kid2Will.mp3"
         },
         {
             title: "Fire Aura",
             artist: "Kid2Will",
-            src: "/music/Fire-Aura_Kid2Will.mp3"
+            src: "/music/Kid2Will/Fire-Aura_Kid2Will.mp3"
         },
         {
             title: "Frozen Fog",
             artist: "Kid2Will",
-            src: "/music/Frozen-Fog_Kid2Will.mp3"
+            src: "/music/Kid2Will/Frozen-Fog_Kid2Will.mp3"
         },
         {
             title: "The Power Within",
             artist: "Kid2Will",
-            src: "/music/Power-Within_Kid2Will.mp3"
+            src: "/music/Kid2Will/Power-Within_Kid2Will.mp3"
+        },
+        {
+            title: "Blue Sky",
+            artist: "ParagonX9",
+            src: "/music/ParagonX9/Blue-Sky_ParagonX9.mp3"
+        },
+        {
+            title: "Chaoz Fantasy",
+            artist: "ParagonX9",
+            src: "/music/ParagonX9/Chaoz-Fantasy_ParagonX9.mp3"
+        },
+        {
+            title: "No 5 NG Edit",
+            artist: "ParagonX9",
+            src: "/music/ParagonX9/No-5-NG-Edit_ParagonX9.mp3"
+        },
+        {
+            title: "Red 13",
+            artist: "ParagonX9",
+            src: "/music/ParagonX9/Red-13_ParagonX9.mp3"
+        },
+        {
+            title: "Milky Ways",
+            artist: "Bossfight",
+            src: "/music/Bossfight/Milky-Ways_Bossfight.mp3"
+        },
+        {
+            title: "Dark Star Dance",
+            artist: "MidiGuyDP",
+            src: "/music/MidiGuyDP/Dark-Star-Dance_MidiGuyDP.mp3"
+        },
+        {
+            title: "Not dead YET",
+            artist: "NeXsard",
+            src: "/music/NeXsard/Not-dead-YET_NeXsard.mp3"
         },
     ];
     const canvas = document.querySelector(".muspla > canvas");
