@@ -348,7 +348,7 @@ section .section-title {
 }
 
 .projects-list .card-title {
-    font-size: 0.3rem;
+    font-size: 0.275rem;
     height: 67px;
     font-weight: 700;
 }
@@ -380,12 +380,6 @@ section.fredopen iframe {
     border: 0;
 }
 
-@media (max-width: 1200px) {
-    .projects-list .card-title {
-        font-size: 0.4rem;
-    }
-}
-
 @media (max-width: 768px) {
     .container {
         grid-template-columns: 1fr;
@@ -415,7 +409,7 @@ section.fredopen iframe {
     }
     
     .projects .card-title {
-        font-size: 0.2rem;
+        font-size: 0.225rem;
         height: 34px;
     }
     
