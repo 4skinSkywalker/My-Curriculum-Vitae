@@ -157,6 +157,8 @@ function initEditor(targetId, mode = "html") {
             }
         }
     }
+
+    editors[mode].clearSelection();
 }
 
 function openFredopen() {
