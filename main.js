@@ -17,9 +17,8 @@ let selectedTab = "experience";
 let fileHandle;
 
 function catWalk() {
-    const { width } = catContainer.getBoundingClientRect();
-    const left = width + 60;
-    cat.style.transitionDuration = (left / 40) + "s";
+    const left = 4000;
+    cat.style.transitionDuration = (left / 60) + "s";
     cat.style.left = left + "px";
 }
 
