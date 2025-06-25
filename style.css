@@ -384,6 +384,12 @@ section.fredopen iframe {
     border: 0;
 }
 
+@media (max-width: 1200px) {
+    .projects-list .card-title {
+        font-size: 0.35rem;
+    }
+}
+
 @media (max-width: 768px) {
     .container {
         grid-template-columns: 1fr;

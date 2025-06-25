@@ -190,29 +190,47 @@ function drag(options) {
     let { target, downCb, moveCb, upCb, ctx, direction } = options;
     direction = direction || "x";
     ctx = ctx || {};
-    target.addEventListener("mousedown", mdevt => {
+    const downHandler = mdevt => {
         document.querySelectorAll("iframe").forEach(el => el.style.pointerEvents = "none");
         document.body.classList.add("moving");
-        const mdpos = direction === "x" ? mdevt.clientX : mdevt.clientY;
+        const mdpos = direction === "x"
+            ? (mdevt && mdevt.touches)
+                ? mdevt.touches[0].pageX
+                : mdevt.clientX
+            : (mdevt && mdevt.touches)
+                ? mdevt.touches[0].pageY
+                : mdevt.clientY;
         downCb && downCb(mdevt, ctx);
         
         const moveHandler = mmevt => {
             mmevt.preventDefault();
-            const mmpos = direction === "x" ? mmevt.clientX : mmevt.clientY;
+            const mmpos = direction === "x"
+                ? (mdevt && mdevt.touches)
+                    ? mmevt.touches[0].pageX
+                    : mmevt.clientX
+                : (mdevt && mdevt.touches)
+                    ? mmevt.touches[0].pageY
+                    : mmevt.clientY;
             ctx.pos = Math.round(mmpos - mdpos);
             moveCb && moveCb(mmevt, ctx);
         };
         document.addEventListener("mousemove", moveHandler);
+        document.addEventListener("touchmove", moveHandler);
         
         const upHandler = (muevt) => {
             document.querySelectorAll("iframe").forEach(el => el.style.pointerEvents = "initial");
             document.body.classList.remove("moving");
             document.removeEventListener("mousemove", moveHandler);
+            document.removeEventListener("touchmove", moveHandler);
             document.removeEventListener("mouseup", upHandler);
+            document.removeEventListener("touchend", upHandler);
             upCb && upCb(muevt, ctx);
         };
         document.addEventListener("mouseup", upHandler);
-    });
+        document.addEventListener("touchend", upHandler);
+    };
+    target.addEventListener("mousedown", downHandler);
+    target.addEventListener("touchstart", downHandler);
 }
 
 (function init() {
