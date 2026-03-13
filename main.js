@@ -219,16 +219,16 @@ function initEditor(targetId, mode = "html") {
 const boardh = document.querySelector("[board]").getAttribute("h");
 
 const p1 = document.querySelector("[p1]");
-const p1w = p1.getAttribute("w");
-const p1h = p1.getAttribute("h");
+const p1w = Number(p1.getAttribute("w"));
+const p1h = Number(p1.getAttribute("h"));
 
 const pspeed = 10;
 const p2 = document.querySelector("[p2]");
-const p2w = p2.getAttribute("w");
-const p2h = p2.getAttribute("h");
+const p2w = Number(p2.getAttribute("w"));
+const p2h = Number(p2.getAttribute("h"));
 
 const ball = document.querySelector("[ball]");
-const ballsize = ball.getAttribute("size");
+const ballsize = Number(ball.getAttribute("size"));
 const halfball = ballsize / 2;
 
 let running = false;
@@ -277,27 +277,30 @@ const loop = () => {
     ball.setAttribute("x", parseInt(ballx + balldx));
     ball.setAttribute("y", parseInt(bally + balldy));
     
+    
     // Board collision
     if (bally > boardh - ballsize) {
         ball.setAttribute("y", boardh - ballsize - 5);
         ball.setAttribute("dy", balldy * -1);
+        ball.setAttribute("dx", balldx);
     }
     if (bally < 0) {
         ball.setAttribute("y", 5);
         ball.setAttribute("dy", balldy * -1);
+        ball.setAttribute("dx", balldx);
     }
     
     // Player 1 collision
     if (ballx > 0 && ballx < p1w && bally > p1y - 2 && bally < p1y + p1h + 2) {
         ball.setAttribute("x", p1w);
-        ball.setAttribute("dx", (balldx * -1) + parseInt(Math.random()*2 - 1));
-        ball.setAttribute("dy", balldy + parseInt(Math.random()*2 - 1));
+        ball.setAttribute("dx", balldx * -1);
+        ball.setAttribute("dy", balldy);
     }
     // Player 2 collision
     if (ballx > boardw - p2w - ballsize && ballx < boardw - ballsize && bally > p2y - 2 && bally < p2y + p2h + 2) {
         ball.setAttribute("x", boardw - p2w - ballsize);
-        ball.setAttribute("dx", (balldx * -1) + parseInt(Math.random()*2 - 1));
-        ball.setAttribute("dy", balldy + parseInt(Math.random()*2 - 1));
+        ball.setAttribute("dx", balldx * -1);
+        ball.setAttribute("dy", balldy);
     }
     
     // Endgame
