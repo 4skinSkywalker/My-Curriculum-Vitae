@@ -73,12 +73,85 @@ function debounce(callback, wait) {
 }
 
 function getHtml() {
-    const html = editors.html ? editors.html.getSession().getValue() : `<div board w="800" h="600">
+    const html = editors.html ? editors.html.getSession().getValue() : ``;
+    const css = editors.css ? editors.css.getSession().getValue() : ``;
+    const javascript = editors.javascript ? editors.javascript.getSession().getValue() : ``;
+    return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>${css}</style>
+<scr${""}ipt defer>window.onload = () => {${javascript}};</scr${""}ipt>
+</head>
+<body>${html}</body>
+</html>`;
+}
+
+function writeIntoIframe() {
+    const content = getHtml();
+    writeFile(content);
+
+    const iframe = document.createElement("IFRAME");
+    fredopenSection.innerHTML = "";
+    fredopenSection.appendChild(iframe);
+
+    iframe.contentWindow.document.open();
+    iframe.contentWindow.document.write(content);
+    iframe.contentWindow.document.close();
+}
+
+function initEditor(targetId, mode = "html") {
+    editors[mode] = ace.edit(targetId);
+    editors[mode].setTheme("ace/theme/monokai");
+
+    ace.require("ace/ext/emmet").setCore("ext/emmet_core");
+    switch(mode) {
+        case "html": {
+            ace.config.loadModule("ace/snippets/html", () => console.log("HTML snippets loaded."));
+            break;
+        }
+        case "css": {
+            ace.config.loadModule("ace/snippets/css", () => console.log("CSS snippets loaded."));
+            break;
+        }
+        case "javascript": {
+            ace.config.loadModule("ace/snippets/javascript", () => console.log("JS snippets loaded."));
+            break;
+        }
+    }
+
+    editors[mode].setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true,
+        enableEmmet: true,
+    });
+
+    editors[mode].getSession().setUseWorker(false);
+    editors[mode].getSession().setMode("ace/mode/" + mode);
+
+    editors[mode].getSession().on("change", debounce(() => {
+        writeIntoIframe();
+        localStorage.setItem(`last-editor-${mode}`, editors[mode].getSession().getValue());
+    }, 500));
+
+    const lastEditorContent = localStorage.getItem(`last-editor-${mode}`) || "";
+    if (lastEditorContent) {
+        editors[mode].setValue(lastEditorContent);
+    } else {
+        switch (mode) {
+            case "html": {
+                editors[mode].setValue(`<div board w="800" h="600">
     <div p1 y="270" w="20" h="60"></div>
     <div p2 y="270" w="20" h="60"></div>
     <div ball size="20" dx="0" dy="0" x="390" y="290"></div>
-</div>`;
-    const css = editors.css ? editors.css.getSession().getValue() : `body {
+</div>`);
+                break;
+            }
+            case "css": {
+                editors[mode].setValue(`body {
     background: #000;
     color: #fff;
     margin: 0;
@@ -138,8 +211,11 @@ function getHtml() {
     width: attr(size px);
     aspect-ratio: 1/1;
     border-radius: 50%;
-}`;
-    const javascript = editors.javascript ? editors.javascript.getSession().getValue() : `const boardw = document.querySelector("[board]").getAttribute("w");
+}`);
+                break;
+            }
+            case "javascript": {
+                editors[mode].setValue(`const boardw = document.querySelector("[board]").getAttribute("w");
 const boardh = document.querySelector("[board]").getAttribute("h");
 
 const p1 = document.querySelector("[p1]");
@@ -237,83 +313,7 @@ const loop = () => {
     
     window.requestAnimationFrame(loop);
 };
-loop();`;
-    return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
-<style>${css}</style>
-<scr${""}ipt defer>window.onload = () => {${javascript}};</scr${""}ipt>
-</head>
-<body>${html}</body>
-</html>`;
-}
-
-function writeIntoIframe() {
-    const content = getHtml();
-    writeFile(content);
-
-    const iframe = document.createElement("IFRAME");
-    fredopenSection.innerHTML = "";
-    fredopenSection.appendChild(iframe);
-
-    iframe.contentWindow.document.open();
-    iframe.contentWindow.document.write(content);
-    iframe.contentWindow.document.close();
-}
-
-function initEditor(targetId, mode = "html") {
-    editors[mode] = ace.edit(targetId);
-    editors[mode].setTheme("ace/theme/monokai");
-
-    ace.require("ace/ext/emmet").setCore("ext/emmet_core");
-    switch(mode) {
-        case "html": {
-            ace.config.loadModule("ace/snippets/html", () => console.log("HTML snippets loaded."));
-            break;
-        }
-        case "css": {
-            ace.config.loadModule("ace/snippets/css", () => console.log("CSS snippets loaded."));
-            break;
-        }
-        case "javascript": {
-            ace.config.loadModule("ace/snippets/javascript", () => console.log("JS snippets loaded."));
-            break;
-        }
-    }
-
-    editors[mode].setOptions({
-        enableBasicAutocompletion: true,
-        enableSnippets: true,
-        enableLiveAutocompletion: true,
-        enableEmmet: true,
-    });
-
-    editors[mode].getSession().setUseWorker(false);
-    editors[mode].getSession().setMode("ace/mode/" + mode);
-
-    editors[mode].getSession().on("change", debounce(() => {
-        writeIntoIframe();
-        localStorage.setItem(`last-editor-${mode}`, editors[mode].getSession().getValue());
-    }, 500));
-
-    const lastEditorContent = localStorage.getItem(`last-editor-${mode}`) || "";
-    if (lastEditorContent) {
-        editors[mode].setValue(lastEditorContent);
-    } else {
-        switch (mode) {
-            case "html": {
-                editors[mode].setValue(`<h1>Hello World!</h1>`);
-                break;
-            }
-            case "css": {
-                editors[mode].setValue(`body {\n\tbackground: #C0FFEE;\n}`);
-                break;
-            }
-            case "javascript": {
-                editors[mode].setValue(`console.log("Hello World!");`);
+loop();`);
                 break;
             }
         }
