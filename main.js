@@ -73,9 +73,171 @@ function debounce(callback, wait) {
 }
 
 function getHtml() {
-    const html = editors.html ? editors.html.getSession().getValue() : "";
-    const css = editors.css ? editors.css.getSession().getValue() : "";
-    const javascript = editors.javascript ? editors.javascript.getSession().getValue() : "";
+    const html = editors.html ? editors.html.getSession().getValue() : `<div board w="800" h="600">
+    <div p1 y="270" w="20" h="60"></div>
+    <div p2 y="270" w="20" h="60"></div>
+    <div ball size="20" dx="0" dy="0" x="390" y="290"></div>
+</div>`;
+    const css = editors.css ? editors.css.getSession().getValue() : `body {
+    background: #000;
+    color: #fff;
+    margin: 0;
+    height: 100svh;
+    display: grid;
+    place-items: center;
+}
+
+[board] {
+    position: relative;
+    width: attr(w px);
+    height: attr(h px);
+    border: 1px dashed;
+    display: grid;
+    place-items: center;
+}
+
+[board]::before {
+    content: "";
+    position: absolute;
+    height: 100%;
+    border-left: 1px dashed;
+}
+
+[board]::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    aspect-ratio: 1/1;
+    border: 1px dashed;
+    border-radius: 50%;
+}
+
+[p1], [p2] {
+    position: absolute;
+    top: 0;
+    background: #fff;
+    width: attr(w px);
+    height: attr(h px);
+}
+
+[p1] {
+    top: attr(y px);
+    left: 0;
+}
+
+[p2] {
+    top: attr(y px);
+    right: 0;
+}
+
+[ball] {
+    position: absolute;
+    top: attr(y px);
+    left: attr(x px);
+    background: #fff;
+    width: attr(size px);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+}`;
+    const javascript = editors.javascript ? editors.javascript.getSession().getValue() : `const boardw = document.querySelector("[board]").getAttribute("w");
+const boardh = document.querySelector("[board]").getAttribute("h");
+
+const p1 = document.querySelector("[p1]");
+const p1w = p1.getAttribute("w");
+const p1h = p1.getAttribute("h");
+
+const pspeed = 10;
+const p2 = document.querySelector("[p2]");
+const p2w = p2.getAttribute("w");
+const p2h = p2.getAttribute("h");
+
+const ball = document.querySelector("[ball]");
+const ballsize = ball.getAttribute("size");
+const halfball = ballsize / 2;
+
+let running = false;
+const keyPress = {
+  q: false,
+  a: false,
+  p: false,
+  l: false,
+  ' ': false,
+}
+
+document.addEventListener("keydown", e => keyPress[e.key] = true);
+document.addEventListener("keyup", e => keyPress[e.key] = false);
+
+const loop = () => {
+    if (keyPress[' ']) {
+        running = true;
+        let rx = 0;
+        let ry = 0;
+        while (rx < 2 && ry < 2) {
+            rx = Math.random() * 10 - 5;
+            ry = Math.random() * 10 - 5;
+        }
+        ball.setAttribute("x", boardw/2 - halfball);
+        ball.setAttribute("y", boardh/2 - halfball);
+        ball.setAttribute("dx", rx);
+        ball.setAttribute("dy", ry);
+        p1.setAttribute("y", boardh/2 - p1h/2);
+        p2.setAttribute("y", boardh/2 - p2h/2);
+        return window.requestAnimationFrame(loop);
+    }
+    
+    const p1y = Number(p1.getAttribute("y"));
+    const p2y = Number(p2.getAttribute("y"));
+    
+    if (keyPress.q) p1.setAttribute("y", parseInt(p1y - pspeed));
+    if (keyPress.a) p1.setAttribute("y", parseInt(p1y + pspeed));
+    
+    if (keyPress.p) p2.setAttribute("y", parseInt(p2y - pspeed));
+    if (keyPress.l) p2.setAttribute("y", parseInt(p2y + pspeed));
+    
+    const ballx = Number(ball.getAttribute("x"));
+    const bally = Number(ball.getAttribute("y"));
+    const balldx = Number(ball.getAttribute("dx"));
+    const balldy = Number(ball.getAttribute("dy"));
+    ball.setAttribute("x", parseInt(ballx + balldx));
+    ball.setAttribute("y", parseInt(bally + balldy));
+    
+    // Board collision
+    if (bally > boardh - ballsize) {
+        ball.setAttribute("y", boardh - ballsize - 5);
+        ball.setAttribute("dy", balldy * -1);
+    }
+    if (bally < 0) {
+        ball.setAttribute("y", 5);
+        ball.setAttribute("dy", balldy * -1);
+    }
+    
+    // Player 1 collision
+    if (ballx > 0 && ballx < p1w && bally > p1y - 2 && bally < p1y + p1h + 2) {
+        ball.setAttribute("x", p1w);
+        ball.setAttribute("dx", (balldx * -1) + parseInt(Math.random()*2 - 1));
+        ball.setAttribute("dy", balldy + parseInt(Math.random()*2 - 1));
+    }
+    // Player 2 collision
+    if (ballx > boardw - p2w - ballsize && ballx < boardw - ballsize && bally > p2y - 2 && bally < p2y + p2h + 2) {
+        ball.setAttribute("x", boardw - p2w - ballsize);
+        ball.setAttribute("dx", (balldx * -1) + parseInt(Math.random()*2 - 1));
+        ball.setAttribute("dy", balldy + parseInt(Math.random()*2 - 1));
+    }
+    
+    // Endgame
+    if (ballx > boardw - ballsize || ballx < 0) {
+        running = false;
+        ball.setAttribute("x", boardw/2 - halfball);
+        ball.setAttribute("y", boardh/2 - halfball);
+        ball.setAttribute("dx", 0);
+        ball.setAttribute("dy", 0);
+        p1.setAttribute("y", boardh/2 - p1h/2);
+        p2.setAttribute("y", boardh/2 - p2h/2);
+    }
+    
+    window.requestAnimationFrame(loop);
+};
+loop();`;
     return `<!DOCTYPE html>
 <html lang="en">
 <head>
