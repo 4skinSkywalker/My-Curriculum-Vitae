@@ -143,10 +143,10 @@ function initEditor(targetId, mode = "html") {
     } else {
         switch (mode) {
             case "html": {
-                editors[mode].setValue(`<div board w="800" h="600">
-    <div p1 y="270" w="20" h="60"></div>
-    <div p2 y="270" w="20" h="60"></div>
-    <div ball size="20" dx="0" dy="0" x="390" y="290"></div>
+                editors[mode].setValue(`<div id="board" w="800" h="600">
+    <div id="p1" y="270" w="20" h="60"></div>
+    <div id="p2" y="270" w="20" h="60"></div>
+    <div id="ball" size="20" dx="0" dy="0" x="390" y="290"></div>
 </div>`);
                 break;
             }
@@ -160,7 +160,7 @@ function initEditor(targetId, mode = "html") {
     place-items: center;
 }
 
-[board] {
+#board {
     position: relative;
     width: attr(w px);
     height: attr(h px);
@@ -169,14 +169,14 @@ function initEditor(targetId, mode = "html") {
     place-items: center;
 }
 
-[board]::before {
+#board::before {
     content: "";
     position: absolute;
     height: 100%;
     border-left: 1px dashed;
 }
 
-[board]::after {
+#board::after {
     content: "";
     position: absolute;
     width: 100px;
@@ -185,7 +185,7 @@ function initEditor(targetId, mode = "html") {
     border-radius: 50%;
 }
 
-[p1], [p2] {
+#p1, #p2 {
     position: absolute;
     top: 0;
     background: #fff;
@@ -193,17 +193,17 @@ function initEditor(targetId, mode = "html") {
     height: attr(h px);
 }
 
-[p1] {
+#p1 {
     top: attr(y px);
     left: 0;
 }
 
-[p2] {
+#p2 {
     top: attr(y px);
     right: 0;
 }
 
-[ball] {
+#ball {
     position: absolute;
     top: attr(y px);
     left: attr(x px);
@@ -215,19 +215,16 @@ function initEditor(targetId, mode = "html") {
                 break;
             }
             case "javascript": {
-                editors[mode].setValue(`const boardw = document.querySelector("[board]").getAttribute("w");
-const boardh = document.querySelector("[board]").getAttribute("h");
+                editors[mode].setValue(`const boardw = board.getAttribute("w");
+const boardh = board.getAttribute("h");
 
-const p1 = document.querySelector("[p1]");
 const p1w = Number(p1.getAttribute("w"));
 const p1h = Number(p1.getAttribute("h"));
 
 const pspeed = 10;
-const p2 = document.querySelector("[p2]");
 const p2w = Number(p2.getAttribute("w"));
 const p2h = Number(p2.getAttribute("h"));
 
-const ball = document.querySelector("[ball]");
 const ballsize = Number(ball.getAttribute("size"));
 const halfball = ballsize / 2;
 
