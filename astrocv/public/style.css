@@ -133,18 +133,6 @@ body.fredopen .aside-editors {
     cursor: pointer;
 }
 
-.contact ul {
-    display: grid;
-    justify-content: start;
-    gap: 20px;
-}
-
-.contact a {
-    text-decoration: none;
-    text-align: left;
-    width: 100%;
-}
-
 .main {
     background-color: #333;
     display: flex;
@@ -167,43 +155,10 @@ body.fredopen .aside-editors {
     overflow: hidden;
 }
 
-.header {
-    position: relative;
-    text-transform: uppercase;
-    padding-block: 3rem;
-    background: linear-gradient(180deg, #2e1b00, #f902);
-    text-align: center;
-    overflow: hidden;
-    max-height: 320px;
-    transition: all 300ms ease;
-}
-
 body.fredopen .header {
     padding: 0;
     max-height: 0;
     transition: all 300ms ease 200ms;
-}
-
-.header .divider {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    transition: all 300ms ease;
-}
-
-.header h1 > *:nth-child(1),
-.header h1 > *:nth-child(2) {
-    line-height: 1;
-    transition: all 300ms ease;
-}
-
-.header h1 > *:nth-child(1) {
-    font-size: 3rem;
-}
-
-.header h1 > *:nth-child(2) {
-    font-size: 4.5rem;
-    font-weight: 700;
 }
 
 body.fredopen .header h1 > *:nth-child(1),
@@ -216,7 +171,7 @@ body.fredopen .header .divider {
 .nav {
     position: relative;
     justify-content: center;
-    background: linear-gradient(#f902, #f902), url(/footer-skyline.webp);
+    background: linear-gradient(#f902, #f902), url(/images/footer-skyline.webp);
     background-size: 175%;
     background-position: bottom center;
     background-repeat: repeat-x;
@@ -242,7 +197,7 @@ body.fredopen .nav {
     left: -96px;
     bottom: 0;
     width: 96px;
-    background: url(cat.webp);
+    background: url(/images/cat.webp);
     background-size: cover;
     aspect-ratio: 1 / 1;
     transition: left linear;
@@ -274,103 +229,6 @@ section .section-title {
     font-weight: 700;
 }
 
-.artdeco-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.artdeco {
-    position: relative;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 15px;
-    padding-bottom: 15px;
-}
-
-.artdeco:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: rgba(var(--primary-color), 1);
-    box-shadow: 0 0 15px rgba(var(--primary-color), 0.5);
-    animation: Widen 400ms ease-out forwards;
-}
-
-.artdeco:nth-child(2)::after {
-    animation-delay: 50ms;
-}
-.artdeco:nth-child(3)::after {
-    animation-delay: 100ms;
-}
-.artdeco:nth-child(4)::after {
-    animation-delay: 150ms;
-}
-
-@keyframes Widen {
-    0% { width: 0 }
-    100% { width: 100% }
-}
-
-.artdeco-image {
-    font-size: 0.4rem;
-    line-height: 1;
-    font-weight: 500;
-}
-
-.artdeco-role {
-    font-weight: 700;
-    font-size: 1.25rem;
-}
-
-.artdeco-company,
-.artdeco-duration {
-    font-size: 0.9rem;
-}
-
-.artdeco-company,
-.artdeco-duration,
-.artdeco-location {
-    color: rgba(var(--primary-color), 0.75)
-}
-
-.artdeco-descr {
-    margin-top: 15px;
-}
-
-.projects-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-    gap: 10px;
-}
-
-.projects-list .card {
-    background-color: #181818;
-}
-
-.projects-list .card-title {
-    font-size: 0.275rem;
-    height: 67px;
-    font-weight: 700;
-}
-
-.projects-list a {
-    text-decoration: none;
-}
-
-.languages-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.language-item h3 {
-    margin-bottom: 10px;
-}
-
 section.fredopen {
     position: relative;
     height: 100%;
@@ -382,12 +240,6 @@ section.fredopen iframe {
     width: 100%;
     height: 100%;
     border: 0;
-}
-
-@media (max-width: 1200px) {
-    .projects-list .card-title {
-        font-size: 0.35rem;
-    }
 }
 
 @media (max-width: 768px) {
@@ -408,22 +260,5 @@ section.fredopen iframe {
 @media (max-width: 576px) {
     body {
         padding: 0;
-    }
-
-    .artdeco {
-        grid-template-columns: 1fr;
-    }
-    
-    .projects-list {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
-    
-    .projects .card-title {
-        font-size: 0.225rem;
-        height: 34px;
-    }
-    
-    .header h2 {
-        font-size: 24px;
     }
 }

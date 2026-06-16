@@ -1,0 +1,24 @@
+---
+import type { IProjectsItem } from "./Projects-item.astro";
+import ProjectsItem from "./Projects-item.astro";
+
+const items = Astro.props.items || [];
+---
+
+<div class="projects-list">
+    {items.map((item: IProjectsItem) => <ProjectsItem {...item} />)}
+</div>
+
+<style>
+    .projects-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        gap: 10px;
+    }
+
+    @media (max-width: 576px) {
+        .projects-list {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+    }
+</style>

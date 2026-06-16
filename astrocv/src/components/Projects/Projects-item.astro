@@ -1,0 +1,59 @@
+---
+export interface IProjectsItem {
+    asciiart?: string;
+    text?: string;
+    href?: string;
+    onClickFn?: string;
+    name?: string;
+}
+
+const {
+    asciiart = "",
+    text = "",
+    href = "#",
+    onClickFn = "(function(){})()",
+    name = "",
+} = Astro.props;
+---
+
+<div class="card overflow-hidden">
+    <div class="card-body">
+        <pre class="card-title">{asciiart}</pre>
+        <p class="card-text">{text}</p>
+        <a
+            href={href}
+            target={href === "#" ? "_self" : "_blank"}
+            class="btn btn-primary"
+            onclick={onClickFn}
+        >Go to {name}</a>
+    </div>
+</div>
+
+<style>
+    .card {
+        background-color: #181818;
+    }
+
+    .card-title {
+        font-size: 0.275rem;
+        height: 67px;
+        font-weight: 700;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    @media (max-width: 1200px) {
+        .card-title {
+            font-size: 0.35rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .card-title {
+            font-size: 0.225rem;
+            height: 34px;
+        }
+    }
+</style>

@@ -1,0 +1,23 @@
+---
+export interface ISkillsItem {
+    index?: number;
+    title?: string;
+    descr?: string;
+}
+
+const {
+    index = 0,
+    title = "",
+    descr = "",
+} = Astro.props;
+---
+
+<div>
+    <label class="btn" for={`skill-${index}`} tabindex="0">&gt; {title} (clickable)</label>
+    <div class="collapse">
+    <input class="collapse-trigger" id={`skill-${index}`} type="checkbox" />
+    <div class="collapse-body">
+        <div class="card-body">{descr}</div>
+    </div>
+    </div>
+</div>

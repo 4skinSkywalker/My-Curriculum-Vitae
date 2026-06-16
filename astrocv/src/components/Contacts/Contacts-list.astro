@@ -1,0 +1,18 @@
+---
+import type { IContactsItem } from "./Contacts-item.astro";
+import ContactsItem from "./Contacts-item.astro";
+
+const items = Astro.props.items || [];
+---
+
+<ul>
+    {items.map((item: IContactsItem) => <ContactsItem {...item} />)}
+</ul>
+
+<style>
+    ul {
+        display: grid;
+        justify-content: start;
+        gap: 20px;
+    }
+</style>

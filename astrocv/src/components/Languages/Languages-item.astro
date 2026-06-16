@@ -1,0 +1,24 @@
+---
+export interface ILanguagesItem {
+    name?: string;
+    percent?: number;
+}
+
+const {
+    name = "",
+    percent = 0,
+} = Astro.props;
+---
+
+<div class="language-item">
+    <h3>{name}</h3>
+    <div class="progress">
+        <div class="progress-bar" style={'width: ' + percent + '%'}></div>
+    </div>
+</div>
+
+<style>
+    h3 {
+        margin-bottom: 10px;
+    }
+</style>

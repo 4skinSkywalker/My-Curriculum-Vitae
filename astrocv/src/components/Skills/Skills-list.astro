@@ -1,0 +1,10 @@
+---
+import type { ISkillsItem } from "./Skills-item.astro";
+import SkillsItem from "./Skills-item.astro";
+
+const items = Astro.props.items || [];
+---
+
+<div class="d-flex flex-column gap-1">
+    {items.map((item: ISkillsItem) => <SkillsItem {...item} />)}
+</div>

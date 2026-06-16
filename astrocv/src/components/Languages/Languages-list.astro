@@ -1,0 +1,18 @@
+---
+import type { ILanguagesItem } from "./Languages-item.astro";
+import LanguagesItem from "./Languages-item.astro";
+
+const items = Astro.props.items || [];
+---
+
+<div class="languages-list">
+    {items.map((item: ILanguagesItem) => <LanguagesItem {...item} />)}
+</div>
+
+<style>
+    .languages-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+</style>

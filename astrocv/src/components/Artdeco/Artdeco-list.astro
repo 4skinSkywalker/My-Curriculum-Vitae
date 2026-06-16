@@ -1,0 +1,16 @@
+---
+import type { IArtdecoItem } from "./Artdeco-item.astro";
+import ArtdecoItem from "./Artdeco-item.astro";
+
+const items = Astro.props.items || [];
+---
+
+<div class="artdeco-list">{items.map((item: IArtdecoItem) => <ArtdecoItem {...item} />)}</div>
+
+<style>
+    .artdeco-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+</style>

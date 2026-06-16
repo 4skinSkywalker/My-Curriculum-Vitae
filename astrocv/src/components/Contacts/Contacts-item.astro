@@ -1,0 +1,27 @@
+---
+export interface IContactsItem {
+    href?: string;
+    icon?: string;
+    text?: string;
+}
+
+const {
+    href = "",
+    icon = "",
+    text = "",
+} = Astro.props;
+---
+
+<li>
+    <a class="btn btn-primary" href={href} target="_blank">
+        <span class={icon}> {text}</span>
+    </a>
+</li>
+
+<style>
+    a {
+        text-decoration: none;
+        text-align: left;
+        width: 100%;
+    }
+</style>

@@ -1,0 +1,99 @@
+---
+export interface IArtdecoItem {
+    image?: string;
+    role?: string;
+    company?: string;
+    duration?: string;
+    location?: string;
+    descr?: string;
+}
+
+const {
+    image = "",
+    role = "",
+    company = "",
+    duration = "",
+    location = "",
+    descr = "",
+} = Astro.props;
+---
+
+<div class="artdeco">
+    <pre class="artdeco-image">{image}</pre>
+    <div>
+        <div class="artdeco-role">{role}</div>
+        <div class="artdeco-company self-type">{company}</div>
+        <div class="artdeco-duration">{duration}</div>
+        <div class="artdeco-location">{location}</div>
+        <div class="artdeco-descr">{descr}</div>
+    </div>
+</div>
+
+<style>
+    .artdeco {
+        position: relative;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        gap: 15px;
+        padding-bottom: 15px;
+    }
+
+    .artdeco:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        width: 0;
+        height: 2px;
+        background-color: rgba(var(--primary-color), 1);
+        box-shadow: 0 0 15px rgba(var(--primary-color), 0.5);
+        animation: Widen 400ms ease-out forwards;
+    }
+
+    .artdeco:nth-child(2)::after {
+        animation-delay: 50ms;
+    }
+    .artdeco:nth-child(3)::after {
+        animation-delay: 100ms;
+    }
+    .artdeco:nth-child(4)::after {
+        animation-delay: 150ms;
+    }
+
+    @keyframes Widen {
+        0% { width: 0 }
+        100% { width: 100% }
+    }
+
+    .artdeco-image {
+        font-size: 0.4rem;
+        line-height: 1;
+        font-weight: 500;
+    }
+
+    .artdeco-role {
+        font-weight: 700;
+        font-size: 1.25rem;
+    }
+
+    .artdeco-company,
+    .artdeco-duration {
+        font-size: 0.9rem;
+    }
+
+    .artdeco-company,
+    .artdeco-duration,
+    .artdeco-location {
+        color: rgba(var(--primary-color), 0.75)
+    }
+
+    .artdeco-descr {
+        margin-top: 15px;
+    }
+
+    @media (max-width: 576px) {
+        .artdeco {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

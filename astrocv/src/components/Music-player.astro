@@ -1,0 +1,499 @@
+<div class="muspla">
+  <input type="checkbox" id="muspla-trigger" hidden />
+  <label for="muspla-trigger" class="muspla-slideout-trigger">
+    <div>Music player <i class="bi bi-arrow-bar-down"></i></div>
+  </label>
+
+  <canvas></canvas>
+
+  <div class="muspla-row1">
+    <div class="muspla-title">
+      <a href="#">Title</a>
+    </div>
+    <div class="muspla-artist">
+      <a href="#">Artist</a>
+    </div>
+  </div>
+
+  <div class="muspla-row2">
+    <div class="muspla-playtime">0:00</div>
+    <div class="muspla-progress progress">
+      <div class="progress-bar" style="width: 0%"></div>
+    </div>
+    <div class="muspla-duration">0:00</div>
+  </div>
+
+  <div class="muspla-row3">
+    <div class="muspla-shuffle muspla-btn-inactive">
+      <i class="bi bi-shuffle"></i>
+    </div>
+    <div class="muspla-backward">
+      <i class="bi bi-skip-backward-fill"></i>
+    </div>
+    <div class="muspla-play">
+      <i class="bi bi-play-circle-fill"></i>
+    </div>
+    <div class="muspla-pause" hidden>
+      <i class="bi bi-pause-circle-fill"></i>
+    </div>
+    <div class="muspla-forward">
+      <i class="bi bi-skip-forward-fill"></i>
+    </div>
+    <div class="muspla-repeat muspla-btn-inactive">
+      <i class="bi bi-repeat"></i>
+    </div>
+  </div>
+</div>
+
+<style>
+  .muspla {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    width: calc(100% - 30px);
+    max-width: 320px;
+    padding: 15px 20px;
+    text-transform: uppercase;
+    background-color: #1118;
+    border: 2px solid rgba(var(--primary-color), 1);
+    box-shadow: 0 0 15px rgba(var(--primary-color), 0.5);
+    backdrop-filter: blur(4px);
+    transition: all 400ms ease;
+    z-index: 50;
+  }
+
+  .muspla:has(input[type="checkbox"]:not(:checked)) {
+    translate: calc(100% + 15px);
+  }
+
+  .muspla-slideout-trigger {
+    position: absolute;
+    right: calc(100% + 6px);
+    top: 0;
+    height: 100%;
+    width: 30px;
+    background-color: rgba(var(--primary-color), 1);
+    color: #000;
+    cursor: pointer;
+  }
+
+  .muspla-slideout-trigger:hover {
+    opacity: 0.85;
+  }
+
+  .muspla-slideout-trigger > * {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    rotate: 90deg;
+    translate: -50% -50%;
+    white-space: nowrap;
+  }
+
+  .muspla > canvas {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+
+  .muspla > video,
+  .muspla-video-blender {
+    position: absolute;
+    top: 0;
+    right: 0;
+    aspect-ratio: 1 / 1;
+    height: 50%;
+  }
+
+  .muspla-row1 a {
+    all: unset;
+    display: inline-block;
+    line-height: 1;
+    padding: 2px 4px;
+    cursor: pointer;
+  }
+
+  .muspla-title {
+    font-weight: 700;
+    font-size: 1.15rem;
+  }
+
+  .muspla-artist {
+    font-size: 0.85rem;
+  }
+
+  .muspla-row2 {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .muspla-row2 > * {
+    flex: 0 1 auto;
+  }
+
+  .muspla-progress {
+    flex-grow: 1;
+    height: 10px;
+    cursor: pointer;
+  }
+
+  .muspla-row3 {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    place-items: center;
+  }
+
+  .muspla-row3 > * {
+    cursor: pointer;
+  }
+
+  .muspla-play,
+  .muspla-pause {
+    grid-area: 1 / 3 / 1 / 4;
+  }
+
+  .muspla-shuffle i,
+  .muspla-repeat i {
+    font-size: 1.15rem;
+  }
+
+  .muspla-backward i,
+  .muspla-forward i {
+    font-size: 1.5rem;
+  }
+
+  .muspla-play i,
+  .muspla-pause i {
+    font-size: 2rem;
+  }
+
+  .muspla-btn-inactive {
+    opacity: 0.5;
+  }
+</style>
+
+<script>
+  window.onload = () => {
+    const originalMusic = [
+      {
+        title: "Night Sky",
+        artist: "Kid2Will",
+        src: "/music/Kid2Will/Night-Sky_Kid2Will.mp3",
+      },
+      {
+        title: "Azarian Fire",
+        artist: "Kid2Will",
+        src: "/music/Kid2Will/Azarian-Fire_Kid2Will.mp3",
+      },
+      {
+        title: "Kid2Will",
+        artist: "Kid2Will",
+        src: "/music/Kid2Will/Kid2Will_Kid2Will.mp3",
+      },
+      {
+        title: "The Highest Horizon",
+        artist: "Kid2Will",
+        src: "/music/Kid2Will/Highest-Horizon_Kid2Will.mp3",
+      },
+      {
+        title: "Fire Aura",
+        artist: "Kid2Will",
+        src: "/music/Kid2Will/Fire-Aura_Kid2Will.mp3",
+      },
+      {
+        title: "Frozen Fog",
+        artist: "Kid2Will",
+        src: "/music/Kid2Will/Frozen-Fog_Kid2Will.mp3",
+      },
+      {
+        title: "The Power Within",
+        artist: "Kid2Will",
+        src: "/music/Kid2Will/Power-Within_Kid2Will.mp3",
+      },
+      {
+        title: "Blue Sky",
+        artist: "ParagonX9",
+        src: "/music/ParagonX9/Blue-Sky_ParagonX9.mp3",
+      },
+      {
+        title: "Chaoz Fantasy",
+        artist: "ParagonX9",
+        src: "/music/ParagonX9/Chaoz-Fantasy_ParagonX9.mp3",
+      },
+      {
+        title: "No 5 NG Edit",
+        artist: "ParagonX9",
+        src: "/music/ParagonX9/No-5-NG-Edit_ParagonX9.mp3",
+      },
+      {
+        title: "Red 13",
+        artist: "ParagonX9",
+        src: "/music/ParagonX9/Red-13_ParagonX9.mp3",
+      },
+      {
+        title: "Milky Ways",
+        artist: "Bossfight",
+        src: "/music/Bossfight/Milky-Ways_Bossfight.mp3",
+      },
+      {
+        title: "Dark Star Dance",
+        artist: "MidiGuyDP",
+        src: "/music/MidiGuyDP/Dark-Star-Dance_MidiGuyDP.mp3",
+      },
+      {
+        title: "Not dead YET",
+        artist: "NeXsard",
+        src: "/music/NeXsard/Not-dead-YET_NeXsard.mp3",
+      },
+    ];
+    const canvas = document.querySelector(".muspla > canvas");
+    const title = document.querySelector(".muspla-title");
+    const artist = document.querySelector(".muspla-artist");
+    const backward = document.querySelector(".muspla-backward");
+    const forward = document.querySelector(".muspla-forward");
+    const playtimeLabel = document.querySelector(".muspla-playtime");
+    const progress = document.querySelector(".muspla-progress");
+    const progressBar = document.querySelector(
+      ".muspla-progress > .progress-bar",
+    );
+    const durationLabel = document.querySelector(".muspla-duration");
+    const playBtn = document.querySelector(".muspla-play");
+    const pauseBtn = document.querySelector(".muspla-pause");
+    const shuffleBtn = document.querySelector(".muspla-shuffle");
+    const repeatBtn = document.querySelector(".muspla-repeat");
+    let firstTime = true;
+    let timer, audio, unsubscribeAnimationFrame;
+    let music = deepCopy(originalMusic);
+    let musicIndex = 0;
+    let isPlaying = false;
+    let duration = 0;
+    let playtime = 0;
+    let isShuffleActive = false;
+    let isRepeatActive = false;
+
+    loadAudio(music[musicIndex]);
+
+    function deepCopy(obj) {
+      return JSON.parse(JSON.stringify(obj));
+    }
+
+    function shuffle(array) {
+      let tmp,
+        current,
+        top = array.length;
+
+      if (top)
+        while (--top) {
+          current = Math.floor(Math.random() * (top + 1));
+          tmp = array[current];
+          array[current] = array[top];
+          array[top] = tmp;
+        }
+
+      return array;
+    }
+
+    function addEventListenerOnce(el, evt, cb) {
+      const cbWrap = () => {
+        cb();
+        el.removeEventListener(evt, cbWrap);
+      };
+      el.addEventListener(evt, cbWrap);
+    }
+
+    function songFinish() {
+      pause();
+      resetPlaytime();
+      if (!isRepeatActive) {
+        nextTrack();
+      }
+      setTimeout(play, 1000);
+    }
+
+    function play() {
+      addEventListenerOnce(audio, "play", () => {
+        isPlaying = true;
+        timer = setInterval(() => {
+          playtime += 0.5;
+          const percent = (100 * playtime) / duration;
+          if (percent >= 100) {
+            songFinish();
+          }
+          progressBar.style.width = percent + "%";
+          playtimeLabel.innerHTML = getTimeLabel(playtime);
+        }, 500);
+      });
+      audio.play();
+      playBtn.setAttribute("hidden", "");
+      pauseBtn.removeAttribute("hidden");
+    }
+
+    function playBtnHandler() {
+      if (firstTime) {
+        loadAudio(music[musicIndex]);
+      }
+      firstTime = false;
+      play();
+    }
+
+    function pause() {
+      audio.pause();
+      isPlaying = false;
+      clearInterval(timer);
+      pauseBtn.setAttribute("hidden", "");
+      playBtn.removeAttribute("hidden");
+    }
+
+    function previousTrack() {
+      if (musicIndex === 0) {
+        musicIndex = music.length - 1;
+      } else {
+        musicIndex--;
+      }
+      pause();
+      loadAudio(music[musicIndex]);
+      play();
+    }
+
+    function nextTrack() {
+      if (musicIndex === music.length - 1) {
+        musicIndex = 0;
+      } else {
+        musicIndex++;
+      }
+      pause();
+      loadAudio(music[musicIndex]);
+      play();
+    }
+
+    function shuffleBtnHandler() {
+      isShuffleActive = !isShuffleActive;
+      shuffleBtn.classList.toggle("muspla-btn-inactive");
+      if (isShuffleActive) {
+        music = shuffle(originalMusic);
+      } else {
+        music = deepCopy(originalMusic);
+      }
+    }
+
+    function repeatBtnHandler() {
+      isRepeatActive = !isRepeatActive;
+      repeatBtn.classList.toggle("muspla-btn-inactive");
+    }
+
+    function progressClickHandler(evt) {
+      const mouseX = evt.clientX;
+      const { x, width } = progress.getBoundingClientRect();
+      const dx = mouseX - x;
+      const percent = dx / width;
+      progressBar.style.width = 100 * percent + "%";
+      playtime = percent * duration;
+      playtimeLabel.innerHTML = getTimeLabel(playtime);
+      audio.currentTime = percent * duration;
+    }
+
+    function getTimeLabel(time) {
+      const mm = Math.floor(time / 60);
+      const ss = Math.floor(time - mm * 60);
+      return mm + ":" + ss.toString().padStart(2, "0");
+    }
+
+    function resetPlaytime() {
+      audio.currentTime = 0;
+      playtime = 0;
+      playtimeLabel.innerHTML = getTimeLabel(playtime);
+      progressBar.style.width = "0%";
+    }
+
+    function initAudioAnalyzer(audio) {
+      const audioContext = new AudioContext();
+
+      const audioSource = audioContext.createMediaElementSource(audio);
+      const audioAnalyser = audioContext.createAnalyser();
+
+      audioSource.connect(audioAnalyser);
+      audioAnalyser.connect(audioContext.destination);
+
+      window.lastAudioContext = audioContext;
+      window.lastAudioSource = audioSource;
+      window.lastAudioAnalyser = audioAnalyser;
+
+      return { audioContext, audioSource, audioAnalyser };
+    }
+
+    function loadAudio(options) {
+      if (unsubscribeAnimationFrame) {
+        unsubscribeAnimationFrame();
+        unsubscribeAnimationFrame = null;
+      }
+
+      audio = new Audio(options.src);
+      audio.src = options.src;
+      audio.load();
+      audio.onloadedmetadata = () => {
+        resetPlaytime();
+        duration = audio.duration;
+        durationLabel.innerHTML = getTimeLabel(duration);
+        if (options.title) {
+          title.innerHTML = options.title;
+        }
+        if (options.artist) {
+          artist.innerHTML = options.artist;
+        }
+      };
+
+      const { audioAnalyser } = initAudioAnalyzer(audio);
+
+      const ctx = canvas.getContext("2d");
+      const { width: WIDTH, height: HEIGHT } = canvas.getBoundingClientRect();
+
+      audioAnalyser.fftSize = 256;
+      const bufferLength = audioAnalyser.frequencyBinCount;
+      const dataArray = new Uint8Array(bufferLength);
+      const barWidth = (WIDTH / bufferLength) * 2.5;
+      let barHeight;
+      let x = 0;
+      let doNotRenewAnimationFrame = false;
+
+      function renderFrame() {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        x = 0;
+        audioAnalyser.getByteFrequencyData(dataArray);
+
+        for (let i = 0; i < bufferLength; i++) {
+          barHeight = dataArray[i] * 0.33;
+          ctx.fillStyle = "rgba(255, 153, 0, 0.5)";
+          ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+          x += barWidth + 1;
+        }
+
+        if (doNotRenewAnimationFrame) {
+          console.log("Animation frame not renewed.");
+          return;
+        }
+
+        requestAnimationFrame(renderFrame);
+      }
+
+      renderFrame();
+
+      unsubscribeAnimationFrame = () => {
+        doNotRenewAnimationFrame = true;
+      };
+    }
+
+    backward.addEventListener("click", previousTrack);
+    forward.addEventListener("click", nextTrack);
+    playBtn.addEventListener("click", playBtnHandler);
+    pauseBtn.addEventListener("click", pause);
+    shuffleBtn.addEventListener("click", shuffleBtnHandler);
+    repeatBtn.addEventListener("click", repeatBtnHandler);
+    progress.addEventListener("click", progressClickHandler);
+  };
+</script>
