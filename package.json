@@ -1,0 +1,8 @@
+{
+  "name": "my-curriculum-vitae",
+  "scripts": {
+    "build-deploy": "cd astrocv && npm run build && node cleanup.js && node movedist.js",
+    "cleanup": "cd astrocv && node cleanup.js",
+    "movedist": "cd astrocv && node movedist.js"
+  }
+}

@@ -1,0 +1,264 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
+.overflow-hidden {
+    overflow: hidden;
+}
+
+body {
+    background-color: #444;
+    transition: all 300ms ease;
+}
+
+body.noise-disabled::before {
+    width: 0;
+    height: 0;
+}
+
+body.fredopen {
+    padding: 0;
+    transition: all 300ms ease 200ms;
+}
+
+.ace_editor {
+    font: inherit;
+    height: 100%;
+}
+
+.moving {
+    user-select: none;
+}
+
+.container {
+    --aside-width: 400px;
+    display: grid;
+    grid-template-columns: var(--aside-width) 1fr;
+    max-width: 1600px;
+    min-height: calc(100svh - 40px);
+    margin: 0 auto;
+}
+
+body.fredopen .container {
+    max-width: 100%;
+    min-height: 100svh;
+    max-height: 100svh;
+}
+
+.aside {
+    position: relative;
+    background-color: #111;
+    border-right: 2px solid rgba(var(--primary-color), 1);
+    overflow: hidden;
+}
+
+.aside .resizer {
+    position: absolute;
+    top: 340px;
+    right: 0;
+    z-index: 50;
+    width: 20px;
+    height: 55px;
+    background-color: rgba(var(--primary-color), 1);
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(var(--primary-color), 0.5);
+}
+
+.aside .resizer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(/images/drag-horizontal-icon.png);
+    background-size: 90%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.aside-default {
+    display: grid;
+    align-content: start;
+}
+
+body.fredopen .aside-default {
+    display: none;
+}
+
+.aside-editors {
+    display: none;
+}
+
+.aside-editors *::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+body.fredopen .aside-editors {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    height: 100%;
+    gap: 2px;
+}
+
+.editor {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto 1fr;
+}
+
+.editor-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    padding: 0 5px;
+    font-size: 0.9rem;
+    background-color: #181818;
+    border-bottom: 2px solid #333;
+}
+
+.editor-title-tools {
+    display: flex;
+    gap: 5px;
+}
+
+.editor-title-tools .btn {
+    font-size: 0.75rem;
+    padding: 3px 6px;
+}
+
+.editor.css .editor-title,
+.editor.js .editor-title {
+    border-top: 2px solid rgba(var(--primary-color), 1);
+    cursor: pointer;
+}
+
+.main {
+    background-color: #333;
+    display: flex;
+    flex-direction: column;
+}
+
+.main > .nav-content {
+    background-color: #222;
+    flex: 1 1 auto;
+}
+
+.image {
+    justify-self: center;
+    width: 325px;
+    height: 325px;
+    display: inline-block;
+    font-size: 12px;
+    line-height: 1;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+body.fredopen .header {
+    padding: 0;
+    max-height: 0;
+    transition: all 300ms ease 200ms;
+}
+
+body.fredopen .header h1 > *:nth-child(1),
+body.fredopen .header h1 > *:nth-child(2),
+body.fredopen .header h2,
+body.fredopen .header .divider {
+    opacity: 0;
+}
+
+.nav {
+    position: relative;
+    justify-content: center;
+    background: linear-gradient(#f902, #f902), url(/images/footer-skyline.webp);
+    background-size: 175%;
+    background-position: bottom center;
+    background-repeat: repeat-x;
+    padding-top: 15px;
+}
+
+body.fredopen .nav {
+    padding-top: 10px;
+}
+
+.cat-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 96px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.cat {
+    position: absolute;
+    left: -96px;
+    bottom: 0;
+    width: 96px;
+    background: url(/images/cat.webp);
+    background-size: cover;
+    aspect-ratio: 1 / 1;
+    transition: left linear;
+    transition-delay: 1s;
+    z-index: 1;
+}
+
+.nav-item {
+    margin-inline: 0;
+    width: 130px;
+    text-align: center;
+    background-color: #0006;
+}
+
+.nav-item.active {
+    z-index: 2;
+}
+
+.nav-link {
+    width: 100%;
+}
+
+section {
+    padding: 20px;
+}
+
+section .section-title {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+section.fredopen {
+    position: relative;
+    height: 100%;
+}
+
+section.fredopen iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    
+    .aside {
+        border-right: none;
+        border-bottom: 2px solid rgba(var(--primary-color), 1);
+    }
+    
+    .resizer {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    body {
+        padding: 0;
+    }
+}

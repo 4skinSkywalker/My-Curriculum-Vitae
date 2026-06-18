@@ -9,7 +9,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "build-deploy": "astro build && node cleanup.js && node movedist.js",
+    "cleanup": "node cleanup.js",
+    "movedist": "node movedist.js"
   },
   "dependencies": {
     "astro": "^6.4.6"
