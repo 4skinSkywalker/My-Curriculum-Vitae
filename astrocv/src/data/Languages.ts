@@ -1,4 +1,4 @@
-import type { ILanguagesItem } from "./Languages-item.astro";
+import type { ILanguagesItem } from "../components/Languages/Languages-item.astro";
 
 export const LANGUAGES_LIST: ILanguagesItem[] = [
     {

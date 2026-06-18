@@ -1,0 +1,13 @@
+---
+import NavItem, { type INavItem } from "./Nav-item.astro";
+
+const items = Astro.props.items || [];
+---
+
+<ul class="nav">
+  <div class="cat-container">
+    <div class="cat"></div>
+  </div>
+
+  {items.map((item: INavItem) => <NavItem {...item} />)}
+</ul>

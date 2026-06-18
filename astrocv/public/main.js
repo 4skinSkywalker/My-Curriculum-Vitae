@@ -395,60 +395,58 @@ function drag(options) {
     target.addEventListener("touchstart", downHandler);
 }
 
-(function init() {
-    initEditor("html-editor", "html");
-    initEditor("css-editor", "css");
-    initEditor("js-editor", "javascript");
+initEditor("html-editor", "html");
+initEditor("css-editor", "css");
+initEditor("js-editor", "javascript");
 
-    showSelectedTab();
+showSelectedTab();
 
-    navItems.forEach(navItem => {
-        const navLink = navItem.querySelector(".nav-link");
-        navLink.addEventListener("click", evt => {
-            evt.preventDefault();
-            selectedTab = navLink.innerText.toLowerCase();
-            showSelectedTab();
-        });
+navItems.forEach(navItem => {
+    const navLink = navItem.querySelector(".nav-link");
+    navLink.addEventListener("click", evt => {
+        evt.preventDefault();
+        selectedTab = navLink.innerText.toLowerCase();
+        showSelectedTab();
     });
+});
 
-    drag({
-        target: resizer,
-        downCb: (evt, ctx) => {
-            ctx.asideWidth = parseInt(getComputedStyle(container).getPropertyValue(asideWidthVar));
-        },
-        moveCb: (evt, ctx) => {
-            const newAsideWidth = Math.max(minAsideWidth, ctx.asideWidth + ctx.pos);
-            container.style.setProperty(asideWidthVar, newAsideWidth + "px");
-        }
-    });
-    
-    drag({
-        target: cssEditor.querySelector(".editor-title"),
-        downCb: (evt, ctx) => {
-            ctx.htmlEditorHeight = htmlEditor.clientHeight;
-            ctx.cssEditorHeight = cssEditor.clientHeight;
-            ctx.jsEditorHeight = jsEditor.clientHeight;
-        },
-        moveCb: (evt, ctx) => {
-            const htmlEditorHeight = (ctx.htmlEditorHeight + ctx.pos) + "px";
-            const cssEditorHeight = (ctx.cssEditorHeight - ctx.pos) + "px";
-            asideEditors.style.gridTemplateRows = `${htmlEditorHeight} ${cssEditorHeight} ${ctx.jsEditorHeight}px`;
-        },
-        direction: "y"
-    });
-    
-    drag({
-        target: jsEditor.querySelector(".editor-title"),
-        downCb: (evt, ctx) => {
-            ctx.htmlEditorHeight = htmlEditor.clientHeight;
-            ctx.cssEditorHeight = cssEditor.clientHeight;
-            ctx.jsEditorHeight = jsEditor.clientHeight;
-        },
-        moveCb: (evt, ctx) => {
-            const cssEditorHeight = (ctx.cssEditorHeight + ctx.pos) + "px";
-            const jsEditorHeight = (ctx.jsEditorHeight - ctx.pos) + "px";
-            asideEditors.style.gridTemplateRows = `${ctx.htmlEditorHeight}px ${cssEditorHeight} ${jsEditorHeight}`;
-        },
-        direction: "y"
-    });
-})();
+drag({
+    target: resizer,
+    downCb: (evt, ctx) => {
+        ctx.asideWidth = parseInt(getComputedStyle(container).getPropertyValue(asideWidthVar));
+    },
+    moveCb: (evt, ctx) => {
+        const newAsideWidth = Math.max(minAsideWidth, ctx.asideWidth + ctx.pos);
+        container.style.setProperty(asideWidthVar, newAsideWidth + "px");
+    }
+});
+
+drag({
+    target: cssEditor.querySelector(".editor-title"),
+    downCb: (evt, ctx) => {
+        ctx.htmlEditorHeight = htmlEditor.clientHeight;
+        ctx.cssEditorHeight = cssEditor.clientHeight;
+        ctx.jsEditorHeight = jsEditor.clientHeight;
+    },
+    moveCb: (evt, ctx) => {
+        const htmlEditorHeight = (ctx.htmlEditorHeight + ctx.pos) + "px";
+        const cssEditorHeight = (ctx.cssEditorHeight - ctx.pos) + "px";
+        asideEditors.style.gridTemplateRows = `${htmlEditorHeight} ${cssEditorHeight} ${ctx.jsEditorHeight}px`;
+    },
+    direction: "y"
+});
+
+drag({
+    target: jsEditor.querySelector(".editor-title"),
+    downCb: (evt, ctx) => {
+        ctx.htmlEditorHeight = htmlEditor.clientHeight;
+        ctx.cssEditorHeight = cssEditor.clientHeight;
+        ctx.jsEditorHeight = jsEditor.clientHeight;
+    },
+    moveCb: (evt, ctx) => {
+        const cssEditorHeight = (ctx.cssEditorHeight + ctx.pos) + "px";
+        const jsEditorHeight = (ctx.jsEditorHeight - ctx.pos) + "px";
+        asideEditors.style.gridTemplateRows = `${ctx.htmlEditorHeight}px ${cssEditorHeight} ${jsEditorHeight}`;
+    },
+    direction: "y"
+});

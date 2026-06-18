@@ -1,4 +1,4 @@
-import type { IProjectsItem } from "./Projects-item.astro";
+import type { IProjectsItem } from "../components/Projects/Projects-item.astro";
 
 export const PROJECTS_LIST: IProjectsItem[] = [
     {

@@ -1,4 +1,4 @@
-import type { IContactsItem } from "./Contacts-item.astro";
+import type { IContactsItem } from "../components/Contacts/Contacts-item.astro";
 
 export const CONTACTS_LIST: IContactsItem[] = [
     {

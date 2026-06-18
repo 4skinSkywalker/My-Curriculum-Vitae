@@ -1,0 +1,13 @@
+---
+export interface INavItem {
+    text?: string;
+}
+
+const {
+    text = "",
+} = Astro.props;
+---
+
+<li class={'nav-item ' + text.toLowerCase()}>
+  <a class="nav-link" href="#">{text}</a>
+</li>

@@ -1,18 +1,22 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { FACE, ABOUT_ME } from "../model/constants";
+import { FACE, ABOUT_ME } from "../data/constants";
+import Header from "../components/Header.astro";
+import FredopenSide from "../components/Fredopen/Fredopen-side.astro";
+import FredopenMain from "../components/Fredopen/Fredopen-main.astro";
+import NavList from "../components/Nav/Nav-list.astro";
 import ArtdecoList from "../components/Artdeco/Artdeco-list.astro";
 import ContactsList from "../components/Contacts/Contacts-list.astro";
 import SkillsList from "../components/Skills/Skills-list.astro";
 import ProjectsList from "../components/Projects/Projects-list.astro";
 import MusicPlayer from "../components/Music-player.astro";
 import LanguagesList from "../components/Languages/Languages-list.astro";
-import { experience } from "../components/Artdeco/experience";
-import { CONTACTS_LIST } from "../components/Contacts/contacts";
-import { SKILLS_LIST } from "../components/Skills/skills";
-import { PROJECTS_LIST } from "../components/Projects/projects";
-import { LANGUAGES_LIST } from "../components/Languages/Languages";
-import Header from "../components/Header.astro";
+import { EXPERIENCE_LIST } from "../data/experience";
+import { CONTACTS_LIST } from "../data/contacts";
+import { SKILLS_LIST } from "../data/skills";
+import { PROJECTS_LIST } from "../data/projects";
+import { LANGUAGES_LIST } from "../data/Languages";
+import { NAVIGATION_LIST } from "../data/navigation";
 ---
 
 <Layout>
@@ -39,78 +43,33 @@ import Header from "../components/Header.astro";
         </section>
       </div>
 
-      <div class="aside-editors">
-        <div class="editor html">
-          <div class="editor-title">
-            <span>HTML</span>
-            <div class="editor-title-tools">
-              <button class="btn btn-primary" onclick="loadFile()">Load file</button>
-              <button class="btn btn-primary" onclick="saveFile()">Save file</button>
-            </div>
-          </div>
-          <div id="html-editor"></div>
-        </div>
-
-        <div class="editor css">
-          <div class="editor-title">
-            <span>CSS</span>
-          </div>
-          <div id="css-editor"></div>
-        </div>
-
-        <div class="editor js">
-          <div class="editor-title">
-            <span>JS</span>
-          </div>
-          <div id="js-editor"></div>
-        </div>
-      </div>
+      <FredopenSide />
     </aside>
+
     <main class="main">
       <Header />
 
-      <ul class="nav">
-        <div class="cat-container">
-          <div class="cat"></div>
-        </div>
-
-        <li class="nav-item experience">
-          <a class="nav-link" href="#">Experience</a>
-        </li>
-
-        <li class="nav-item projects">
-          <a class="nav-link" href="#">Projects</a>
-        </li>
-
-        <li class="nav-item languages">
-          <a class="nav-link" href="#">Languages</a>
-        </li>
-      </ul>
+      <NavList items={NAVIGATION_LIST} />
 
       <div class="nav-content">
         <section class="experience">
           <h3 class="glitch section-title" data-text="Experience">
             Experience
           </h3>
-
-          <ArtdecoList items={experience} />
+          <ArtdecoList items={EXPERIENCE_LIST} />
         </section>
 
         <section class="projects">
           <h3 class="glitch section-title" data-text="Projects">Projects</h3>
-
           <ProjectsList items={PROJECTS_LIST} />
         </section>
 
         <section class="languages">
           <h3 class="glitch section-title" data-text="Languages">Languages</h3>
-
           <LanguagesList items={LANGUAGES_LIST} />
         </section>
 
-        <section class="fredopen">
-          <iframe src="" frameborder="0"></iframe>
-        </section>
+        <FredopenMain />
       </div>
     </main>
   </div>

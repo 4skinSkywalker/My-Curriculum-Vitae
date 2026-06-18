@@ -1,4 +1,4 @@
-import type { ISkillsItem } from "./Skills-item.astro";
+import type { ISkillsItem } from "../components/Skills/Skills-item.astro";
 
 export const SKILLS_LIST: ISkillsItem[] = [
     {

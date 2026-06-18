@@ -1,4 +1,6 @@
-export const experience = [
+import type { IArtdecoItem } from "../components/Artdeco/Artdeco-item.astro";
+
+export const EXPERIENCE_LIST: IArtdecoItem[] = [
     {
         image: `--------------------------------------------------
 --------------------------------------------------
