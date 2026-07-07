@@ -4,19 +4,20 @@ import { FACE, ABOUT_ME } from "../data/constants";
 import Header from "../components/Header.astro";
 import FredopenSide from "../components/Fredopen/Fredopen-side.astro";
 import FredopenMain from "../components/Fredopen/Fredopen-main.astro";
-import NavList from "../components/Nav/Nav-list.astro";
 import ArtdecoList from "../components/Artdeco/Artdeco-list.astro";
 import ContactsList from "../components/Contacts/Contacts-list.astro";
 import SkillsList from "../components/Skills/Skills-list.astro";
+import NavList from "../components/Nav/Nav-list.astro";
 import ProjectsList from "../components/Projects/Projects-list.astro";
-import MusicPlayer from "../components/Music-player.astro";
 import LanguagesList from "../components/Languages/Languages-list.astro";
+import MusicPlayer from "../components/Music-player.astro";
+import BlogList from "../components/BlogList.astro";
 import { EXPERIENCE_LIST } from "../data/experience";
 import { CONTACTS_LIST } from "../data/contacts";
 import { SKILLS_LIST } from "../data/skills";
+import { NAVIGATION_LIST } from "../data/navigation";
 import { PROJECTS_LIST } from "../data/projects";
 import { LANGUAGES_LIST } from "../data/Languages";
-import { NAVIGATION_LIST } from "../data/navigation";
 ---
 
 <Layout>
@@ -53,17 +54,18 @@ import { NAVIGATION_LIST } from "../data/navigation";
 
       <div class="nav-content">
         <section class="experience">
-          <h3 class="glitch section-title" data-text="Experience">Experience</h3>
           <ArtdecoList items={EXPERIENCE_LIST} />
+        </section>
+        
+        <section class="blog">
+          <BlogList/>
         </section>
 
         <section class="projects">
-          <h3 class="glitch section-title" data-text="Projects">Projects</h3>
           <ProjectsList items={PROJECTS_LIST} />
         </section>
 
         <section class="languages">
-          <h3 class="glitch section-title" data-text="Languages">Languages</h3>
           <LanguagesList items={LANGUAGES_LIST} />
         </section>
 

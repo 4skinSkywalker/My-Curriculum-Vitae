@@ -12,8 +12,8 @@ const navItems = document.querySelectorAll(".nav-item");
 const fredopenSection = document.querySelector("section.fredopen");
 const catContainer = document.querySelector(".cat-container");
 const cat = document.querySelector(".cat");
+const tabs = ['experience', 'blog', 'projects', 'languages', 'fredopen'];
 let editors = {};
-let selectedTab = "experience";
 let fileHandle;
 
 function catWalk() {
@@ -322,29 +322,31 @@ loop();`);
     editors[mode].clearSelection();
 }
 
+function getLocationHash() {
+    return window.location.hash.slice(1);
+}
+
 function openFredopen() {
-    selectedTab = "fredopen";
+    window.location.hash = "fredopen";
     showSelectedTab();
 }
 
 function showSelectedTab() {
-    if (selectedTab === "fredopen") {
+    if (getLocationHash() === "fredopen") {
         document.body.classList.add("fredopen");
-        document.body.classList.add("noise-disabled");
     } else {
         document.body.classList.remove("fredopen");
-        document.body.classList.remove("noise-disabled");
     }
 
-    if (selectedTab === "projects") {
+    if (getLocationHash() === "projects") {
         catWalk();
     }
 
     sections.forEach(el => el.style.display = "none");
-    const section = document.querySelector(".nav-content > section." + selectedTab);
+    const section = document.querySelector(".nav-content > section." + getLocationHash());
     section.style.display = "block";
     navItems.forEach(el => el.classList.remove("active"));
-    const navItem = document.querySelector(".nav-item." + selectedTab);
+    const navItem = document.querySelector(".nav-item." + getLocationHash());
     navItem.classList.add("active");
 }
 
@@ -395,58 +397,60 @@ function drag(options) {
     target.addEventListener("touchstart", downHandler);
 }
 
-initEditor("html-editor", "html");
-initEditor("css-editor", "css");
-initEditor("js-editor", "javascript");
-
-showSelectedTab();
-
-navItems.forEach(navItem => {
-    const navLink = navItem.querySelector(".nav-link");
-    navLink.addEventListener("click", evt => {
-        evt.preventDefault();
-        selectedTab = navLink.innerText.toLowerCase();
-        showSelectedTab();
+(function init() {
+    window.addEventListener("hashchange", () => {
+        if (tabs.includes(getLocationHash())) {
+            showSelectedTab();
+        }
     });
-});
 
-drag({
-    target: resizer,
-    downCb: (evt, ctx) => {
-        ctx.asideWidth = parseInt(getComputedStyle(container).getPropertyValue(asideWidthVar));
-    },
-    moveCb: (evt, ctx) => {
-        const newAsideWidth = Math.max(minAsideWidth, ctx.asideWidth + ctx.pos);
-        container.style.setProperty(asideWidthVar, newAsideWidth + "px");
-    }
-});
+    window.location.hash = window.location.hash || "experience";
 
-drag({
-    target: cssEditor.querySelector(".editor-title"),
-    downCb: (evt, ctx) => {
-        ctx.htmlEditorHeight = htmlEditor.clientHeight;
-        ctx.cssEditorHeight = cssEditor.clientHeight;
-        ctx.jsEditorHeight = jsEditor.clientHeight;
-    },
-    moveCb: (evt, ctx) => {
-        const htmlEditorHeight = (ctx.htmlEditorHeight + ctx.pos) + "px";
-        const cssEditorHeight = (ctx.cssEditorHeight - ctx.pos) + "px";
-        asideEditors.style.gridTemplateRows = `${htmlEditorHeight} ${cssEditorHeight} ${ctx.jsEditorHeight}px`;
-    },
-    direction: "y"
-});
+    showSelectedTab();
 
-drag({
-    target: jsEditor.querySelector(".editor-title"),
-    downCb: (evt, ctx) => {
-        ctx.htmlEditorHeight = htmlEditor.clientHeight;
-        ctx.cssEditorHeight = cssEditor.clientHeight;
-        ctx.jsEditorHeight = jsEditor.clientHeight;
-    },
-    moveCb: (evt, ctx) => {
-        const cssEditorHeight = (ctx.cssEditorHeight + ctx.pos) + "px";
-        const jsEditorHeight = (ctx.jsEditorHeight - ctx.pos) + "px";
-        asideEditors.style.gridTemplateRows = `${ctx.htmlEditorHeight}px ${cssEditorHeight} ${jsEditorHeight}`;
-    },
-    direction: "y"
-});
+    initEditor("html-editor", "html");
+    initEditor("css-editor", "css");
+    initEditor("js-editor", "javascript");
+    
+    drag({
+        target: resizer,
+        downCb: (evt, ctx) => {
+            ctx.asideWidth = parseInt(getComputedStyle(container).getPropertyValue(asideWidthVar));
+        },
+        moveCb: (evt, ctx) => {
+            const newAsideWidth = Math.max(minAsideWidth, ctx.asideWidth + ctx.pos);
+            container.style.setProperty(asideWidthVar, newAsideWidth + "px");
+        }
+    });
+    
+    drag({
+        target: cssEditor.querySelector(".editor-title"),
+        downCb: (evt, ctx) => {
+            ctx.htmlEditorHeight = htmlEditor.clientHeight;
+            ctx.cssEditorHeight = cssEditor.clientHeight;
+            ctx.jsEditorHeight = jsEditor.clientHeight;
+        },
+        moveCb: (evt, ctx) => {
+            const htmlEditorHeight = (ctx.htmlEditorHeight + ctx.pos) + "px";
+            const cssEditorHeight = (ctx.cssEditorHeight - ctx.pos) + "px";
+            asideEditors.style.gridTemplateRows = `${htmlEditorHeight} ${cssEditorHeight} ${ctx.jsEditorHeight}px`;
+        },
+        direction: "y"
+    });
+    
+    drag({
+        target: jsEditor.querySelector(".editor-title"),
+        downCb: (evt, ctx) => {
+            ctx.htmlEditorHeight = htmlEditor.clientHeight;
+            ctx.cssEditorHeight = cssEditor.clientHeight;
+            ctx.jsEditorHeight = jsEditor.clientHeight;
+        },
+        moveCb: (evt, ctx) => {
+            const cssEditorHeight = (ctx.cssEditorHeight + ctx.pos) + "px";
+            const jsEditorHeight = (ctx.jsEditorHeight - ctx.pos) + "px";
+            asideEditors.style.gridTemplateRows = `${ctx.htmlEditorHeight}px ${cssEditorHeight} ${jsEditorHeight}`;
+        },
+        direction: "y"
+    });
+})();
+

@@ -1,0 +1,87 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const today = new Date();
+---
+
+<html lang="en">
+	<head>
+		<!-- Global Metadata -->
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+
+		<!-- Favicon and App Icons -->
+		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+		<link rel="manifest" href="/site.webmanifest">
+		<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+		<!-- Android Icons -->
+		<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+		<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+
+		<!-- Theme Metadata -->
+		<meta name="theme-color" content="#000000">
+
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<link
+			rel="alternate"
+			type="application/rss+xml"
+			title="Fredo's blog"
+			href={new URL('rss.xml', Astro.site)}
+		/>
+		<meta name="generator" content={Astro.generator} />
+
+		<!-- Canonical URL -->
+		<link rel="canonical" href={canonicalURL} />
+
+		<!-- Primary Meta Tags -->
+		<title>{title}</title>
+		<meta name="description" content={description} />
+
+		<!-- Open Graph / Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+
+		<!-- Twitter -->
+		<meta name="twitter:card" content="summary_large_image" />
+
+		<link rel="stylesheet" href="https://4skinSkywalker.github.io/Assets-for-my-Codepen/reset.css">
+		<link rel="stylesheet" href="https://4skinSkywalker.github.io/Aeon-Flexx-CSS/aeon-flexx.css">
+		<link rel="stylesheet" href="/style.css">
+	</head>
+
+	<body class="noise-disabled" style="background-color: #000;">
+		<main style="max-width: 800px; margin-inline: auto;">
+			<article>
+				<div class="cyberground text-center d-grid gap-3 justify-items-center align-content-center mb-xl p-3" style="min-height: 250px;">
+					<a href="/#blog">🡄 Go back</a>
+					<div class="date">{pubDate}</div>
+					<h1 class="title">{title}</h1>
+				</div>
+
+				<div class="prose">
+					<slot />
+				</div>
+			</article>
+		</main>
+
+		<footer>
+			<a class="mb-3" href="/#blog">🡄 Go back</a>
+			<div>&copy; {today.getFullYear()} Federico Trotta. All rights reserved.</div>
+		</footer>
+		<style>
+			footer {
+				padding: 2em 1em 6em 1em;
+				text-align: center;
+			}
+		</style>
+	</body>
+</html>
