@@ -37,7 +37,6 @@ const tuples = Object.entries(structure).sort((a, b) => b[0].localeCompare(a[0])
                                 {post.data.image && <img src={post.data.image} alt={post.data.title} />}
                             </div>
                             <div class="review-card-main">
-                                <div class="review-card-date">{post.data.pubDate}</div>
                                 <h3 class="review-card-title">{post.data.title}</h3>
                                 <div class="review-card-info">{post.data.age}, {post.data.author}</div>
 
@@ -64,7 +63,6 @@ const tuples = Object.entries(structure).sort((a, b) => b[0].localeCompare(a[0])
                         
                         <article class="article-card">
                             <h3 class="article-title">{post.data.title}</h3>
-                            <div class="article-author">{post.data.pubDate}</div>
 
                             <ul class="article-tags">
                                 {post.data.tags && post.data.tags.map((tag: string) => (
