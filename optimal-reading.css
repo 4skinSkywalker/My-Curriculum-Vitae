@@ -38,9 +38,7 @@ li {
 blockquote {
     margin: 2rem 0;
     padding-left: 1.25rem;
-    border-left: 4px solid #ccc;
     font-style: italic;
-    color: #555;
 }
 
 /* Images */
@@ -54,13 +52,10 @@ img {
 
 /* Code */
 code {
-    padding: .15rem .35rem;
-    border-radius: 4px;
     font-family: monospace;
 }
 
 pre {
     padding: 1rem;
     overflow-x: auto;
-    border-radius: 6px;
 }
