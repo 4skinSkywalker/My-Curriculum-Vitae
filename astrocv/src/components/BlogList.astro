@@ -1,74 +1,89 @@
 ---
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog'))
-    .sort((a, b) => b.data.pubDate.localeCompare(a.data.pubDate));
+const posts = (await getCollection('blog'));
+
+const structure = posts.map(post => post.data.pubDate).reduce((a: any, b: string) => (a[b] = [], a), {});
+
+for (const post of posts) {
+    structure[post.data.pubDate].push(post);
+}
+
+const tuples = Object.entries(structure).sort((a, b) => b[0].localeCompare(a[0]));
 ---
 
-<div class="timeline">{
-    posts.map((post) => (
-        post.data.type === 'review'
-            ? (<div class="timeline-item">
-                <div class="timeline-main">
-                    <div class="timeline-author">
-                        <div class="timeline-author-icon">
-                            <img src={post.data.creatorIcon} alt="Creator Icon" />
-                        </div>
-                        <div class="timeline-author-name">{post.data.createdBy}</div>
-                    </div>
+<div class="timeline">
+    {tuples.map(([date, posts]) => (
+        <div class="timeline-item">
+            <div class="timeline-line">
+                <div class="timeline-icon"></div>
+            </div>
 
-                    <article class="review-card">
-                        <div class="review-card-image">
-                            {post.data.image && <img src={post.data.image} alt={post.data.title} />}
-                        </div>
-                        <div class="review-card-main">
-                            <div class="review-card-date">{post.data.pubDate}</div>
-                            <h3 class="review-card-title">{post.data.title}</h3>
-                            <div class="review-card-info">{post.data.age}, {post.data.author}</div>
+            <div class="timeline-main">
+                <div class="timeline-date">{date}</div>
 
-                            <div class="review-card-text">
+                {(posts as { id: string, data: any }[]).map((post) => (
+                    post.data.type === 'review'
+                        ? (
+                        <div class="timeline-author">
+                            <div class="timeline-author-icon">
+                                <img src={post.data.creatorIcon} alt="Creator Icon" />
+                            </div>
+                            <div class="timeline-author-name">{post.data.createdBy}</div>
+                        </div>
+
+                        <article class="review-card">
+                            <div class="review-card-image">
+                                {post.data.image && <img src={post.data.image} alt={post.data.title} />}
+                            </div>
+                            <div class="review-card-main">
+                                <div class="review-card-date">{post.data.pubDate}</div>
+                                <h3 class="review-card-title">{post.data.title}</h3>
+                                <div class="review-card-info">{post.data.age}, {post.data.author}</div>
+
+                                <div class="review-card-text">
+                                    <p>{post.data.description}</p>
+                                </div>
+                                
+                                <ul class="review-card-rating">
+                                    <li class={post.data.rating === 'poor'      ? "rating-item rating-item--active" : "rating-item"}>Poor</li>
+                                    <li class={post.data.rating === 'mediocre'  ? "rating-item rating-item--active" : "rating-item"}>Mediocre</li>
+                                    <li class={post.data.rating === 'good'      ? "rating-item rating-item--active" : "rating-item"}>Good</li>
+                                    <li class={post.data.rating === 'excellent' ? "rating-item rating-item--active" : "rating-item"}>Excellent</li>
+                                </ul>
+                            </div>
+                        </article>
+                        )
+                        : (
+                        <div class="timeline-author">
+                            <div class="timeline-author-icon">
+                                <img src={post.data.creatorIcon} alt="Creator Icon" />
+                            </div>
+                            <div class="timeline-author-name">{post.data.createdBy}</div>
+                        </div>
+                        
+                        <article class="article-card">
+                            <h3 class="article-title">{post.data.title}</h3>
+                            <div class="article-author">{post.data.pubDate}</div>
+
+                            <ul class="article-tags">
+                                {post.data.tags && post.data.tags.map((tag: string) => (
+                                    <li class="article-tag">#{tag}</li>
+                                ))}
+                            </ul>
+
+                            <div class="article-text">
                                 <p>{post.data.description}</p>
                             </div>
-                            
-                            <ul class="review-card-rating">
-                                <li class={post.data.rating === 'poor'      ? "rating-item rating-item--active" : "rating-item"}>Poor</li>
-                                <li class={post.data.rating === 'mediocre'  ? "rating-item rating-item--active" : "rating-item"}>Mediocre</li>
-                                <li class={post.data.rating === 'good'      ? "rating-item rating-item--active" : "rating-item"}>Good</li>
-                                <li class={post.data.rating === 'excellent' ? "rating-item rating-item--active" : "rating-item"}>Excellent</li>
-                            </ul>
-                        </div>
-                    </article>
-                </div>
-            </div>)
-            : (<div class="timeline-item">
-                <div class="timeline-main">
-                    <div class="timeline-author">
-                        <div class="timeline-author-icon">
-                            <img src={post.data.creatorIcon} alt="Creator Icon" />
-                        </div>
-                        <div class="timeline-author-name">{post.data.createdBy}</div>
-                    </div>
-                    
-                    <article class="article-card">
-                        <h3 class="article-title">{post.data.title}</h3>
-                        <div class="article-author">{post.data.pubDate}</div>
 
-                        <ul class="article-tags">
-                            {post.data.tags && post.data.tags.map((tag) => (
-                                <li class="article-tag">#{tag}</li>
-                            ))}
-                        </ul>
-
-                        <div class="article-text">
-                            <p>{post.data.description}</p>
-                        </div>
-
-                        <a href={`/blog/${post.id}/`} class="btn btn-primary ms-auto">Read more</a>
-                    </article>
-                </div>
-            </div>)
-    ))
-}</div>
+                            <a href={`/blog/${post.id}/`} class="btn btn-primary ms-auto">Read more</a>
+                        </article>
+                        )
+                ))}
+            </div>
+        </div>
+    ))}
+</div>
 
 <style>
     .timeline {
@@ -80,6 +95,33 @@ const posts = (await getCollection('blog'))
         .timeline-item {
             display: flex;
             gap: 1rem;
+
+            @media (max-width: 768px) {
+                gap: 0.5rem;
+            }
+
+            .timeline-line {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                
+                &::after {
+                    content: '';
+                    width: 3px;
+                    height: 100%;
+                    position: absolute;
+                    background: rgba(var(--primary-color));
+                }
+                
+                .timeline-icon {
+                    align-self: start;
+                    margin-top: 12px;
+                    width: 24px;
+                    aspect-ratio: 1/1;
+                    background: rgba(var(--primary-color));
+                    border-radius: 50%;
+                }
+            }
             
             .timeline-main {
                 display: flex;
@@ -87,6 +129,16 @@ const posts = (await getCollection('blog'))
                 gap: 1rem;
                 flex-grow: 1;
                 padding-bottom: 2rem;
+
+                .timeline-date {
+                    font-family: "Maple Mono", monospace;
+                    font-style: italic;
+                    font-size: 1.5rem;
+                    padding: 10px;
+                    position: sticky;
+                    top: 0;
+                    backdrop-filter: blur(10px);
+                }
                 
                 .timeline-author {
                     display: flex;
