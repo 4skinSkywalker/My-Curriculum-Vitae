@@ -8,8 +8,6 @@ type: 'post'
 tags: ['code', 'numbers', 'javascript']
 ---
 
-# Parsing Human Numbers
-
 One of the small problems you face as a programmer working on shitty databases is that humans do not write numbers the same way everywhere.
 
 JavaScript expects decimals to use a dot:

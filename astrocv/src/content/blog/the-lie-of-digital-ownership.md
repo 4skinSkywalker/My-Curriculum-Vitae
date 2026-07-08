@@ -8,8 +8,6 @@ type: 'post'
 tags: ['digital', 'physical', 'ownership']
 ---
 
-# The Lie Of Digital Ownership
-
 For years, we've been told that digital is the future. Movies, games, music, books, software have all migrated toward downloads and streaming. It's convenient, instant, and requires no physical space.
 
 But convenience comes with a trade-off: you don't actually own what you buy.
