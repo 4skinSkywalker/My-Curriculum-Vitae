@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="en" data-astro-cid-tldeq5d5><head><!-- Global Metadata --><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><!-- Favicon and App Icons --><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="manifest" href="/site.webmanifest"><link rel="icon" href="/favicon.ico" type="image/x-icon"><!-- Android Icons --><link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png"><link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png"><!-- Theme Metadata --><meta name="theme-color" content="#000000"><link rel="sitemap" href="/sitemap-index.xml"><link rel="alternate" type="application/rss+xml" title="Fredo's blog" href="https://federicotrotta.dev/rss.xml"><meta name="generator" content="Astro v7.0.6"><!-- Canonical URL --><link rel="canonical" href="https://federicotrotta.dev/blog/running-js-outside-main-thread/"><!-- Primary Meta Tags --><title>Running JS Outside the Main Thread</title><meta name="description" content="JavaScript has always had a reputation for being single-threaded. In the browser, your code runs on the main thread which is responsible for rendering pages..."><!-- Open Graph / Facebook --><meta property="og:type" content="website"><meta property="og:url" content="https://federicotrotta.dev/blog/running-js-outside-main-thread/"><meta property="og:title" content="Running JS Outside the Main Thread"><meta property="og:description" content="JavaScript has always had a reputation for being single-threaded. In the browser, your code runs on the main thread which is responsible for rendering pages..."><!-- Twitter --><meta name="twitter:card" content="summary_large_image"><link rel="stylesheet" href="https://4skinSkywalker.github.io/Assets-for-my-Codepen/reset.css"><link rel="stylesheet" href="https://4skinSkywalker.github.io/Aeon-Flexx-CSS/aeon-flexx.css"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/optimal-reading.css"><style>footer[data-astro-cid-tldeq5d5]{text-align:center;padding:2em 1em 6em}
+</style></head><body class="noise-disabled" style="background-color: #000;" data-astro-cid-tldeq5d5><main style="max-width: 800px; margin-inline: auto;" data-astro-cid-tldeq5d5><article data-astro-cid-tldeq5d5><div class="cyberground text-center d-grid gap-3 justify-items-center align-content-center mb-xl p-3" style="min-height: 300px;" data-astro-cid-tldeq5d5><a href="/#blog" data-astro-cid-tldeq5d5>🡄 Go back</a><div class="date" data-astro-cid-tldeq5d5>2026-07-09</div><h1 class="title" data-astro-cid-tldeq5d5>Running JS Outside the Main Thread</h1></div><div class="px-3" data-astro-cid-tldeq5d5><p>JavaScript has always had a reputation for being <strong>single-threaded</strong>. In the browser, your code runs on the main thread which is responsible for rendering pages, handling clicks, animations, scrolling, and user interaction.</p>
+<p>That creates a painful problem:</p>
+<blockquote>
+<p>What happens when you need to run something extremely expensive?</p>
+</blockquote>
+<p>Normally, the answer is: <strong>Use Web Workers.</strong></p>
+<p>But Web Workers need another file, worker setup code, message handling, serialization, and a communication layer.</p>
+<p>The function in this blog post tries to solve this problem:</p>
+<blockquote>
+<p>“Can we take any function and execute it somewhere else without blocking the main thread?”</p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>function execOutside(fnRef, input) {</span></span>
+<span class="line"><span>    let strFn = fnRef.toString();</span></span>
+<span class="line"><span>    const re = /function[^(]*\(([^)]*)\)/;</span></span>
+<span class="line"><span>    const matched = strFn.match(re)[1];</span></span>
+<span class="line"><span>    strFn = strFn.replace(re, "function ()");</span></span>
+<span class="line"><span>    const str = `self.onmessage = ({ data }) => {</span></span>
+<span class="line"><span>    const [[replacer]] = data;</span></span>
+<span class="line"><span>    (${strFn})();</span></span>
+<span class="line"><span>    self.postMessage(data);</span></span>
+<span class="line"><span>}`.replace("[[replacer]]", matched);</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>    return new Promise((resolve) => {</span></span>
+<span class="line"><span>        const w = new Worker(URL.createObjectURL(new Blob([str])));</span></span>
+<span class="line"><span>        w.onerror = (err) => console.error(err);</span></span>
+<span class="line"><span>        w.onmessage = ({ data }) => resolve(data);</span></span>
+<span class="line"><span>        w.postMessage(input);</span></span>
+<span class="line"><span>    })</span></span>
+<span class="line"><span>}</span></span>
+<span class="line"><span></span></span>
+<span class="line"><span>console.log(</span></span>
+<span class="line"><span>    await execOutside(</span></span>
+<span class="line"><span>        function (a) {</span></span>
+<span class="line"><span>            for (let i = 0; i &#x3C; 5e9; i++) {}</span></span>
+<span class="line"><span>            a.test = "c";</span></span>
+<span class="line"><span>            console.log(a.test);</span></span>
+<span class="line"><span>        },</span></span>
+<span class="line"><span>        { test: "test" }</span></span>
+<span class="line"><span>    )</span></span>
+<span class="line"><span>);</span></span></code></pre>
+<h2 id="why-is-this-cool">Why Is This Cool?</h2>
+<ol>
+<li>It Makes Web Workers Feel Like Normal Functions</li>
+<li>Zero Worker Files</li>
+<li>It Uses Real Parallelism</li>
+</ol>
+<h2 id="is-it-reliable">Is It Reliable?</h2>
+<p>The concept is excellent. The implementation is fragile. But it works.</p>
+</div></article></main><footer data-astro-cid-tldeq5d5><a class="mb-3" href="/#blog" data-astro-cid-tldeq5d5>🡄 Go back</a><div data-astro-cid-tldeq5d5>&copy; 2026 Federico Trotta. All rights reserved.</div></footer></body></html>
