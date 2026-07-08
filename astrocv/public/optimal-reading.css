@@ -54,14 +54,12 @@ img {
 
 /* Code */
 code {
-    background: #f5f5f5;
     padding: .15rem .35rem;
     border-radius: 4px;
     font-family: monospace;
 }
 
 pre {
-    background: #f5f5f5;
     padding: 1rem;
     overflow-x: auto;
     border-radius: 6px;
