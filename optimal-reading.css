@@ -34,16 +34,6 @@ li {
     margin-bottom: 0.6rem;
 }
 
-/* Links */
-a {
-    color: #0066cc;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
 /* Quotes */
 blockquote {
     margin: 2rem 0;
