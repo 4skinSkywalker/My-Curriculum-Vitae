@@ -5,7 +5,7 @@ title: 'Our Education System Is Outdated'
 description: "Students will spend their lives making financial decisions, interpreting medical advice, voting in elections, evaluating scientific claims, and deciding whom to trust..."
 pubDate: '2026-07-10'
 type: 'post'
-tags: ['education', 'numbers', 'javascript']
+tags: ['education', 'future']
 ---
 
 Students will spend their lives making financial decisions, interpreting medical advice, voting in elections, evaluating scientific claims, and deciding whom to trust. They'll be bombarded with statistics, manipulated by advertising, and exposed to misinformation.
