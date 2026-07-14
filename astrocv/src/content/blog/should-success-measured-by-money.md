@@ -2,7 +2,7 @@
 createdBy: 'Fredo'
 creatorIcon: 'images/creator-icon.png'
 title: 'What Does It Mean to Be Successful?'
-description: ""
+description: "Ask ten people what success looks like, and you'll probably hear ten different answers. Some will point to a billionaire. Others will think of someone surrounded by a loving family. Someone else will admire the person who left everything behind to climb mountains for a living..."
 pubDate: '2026-07-14'
 type: 'post'
 tags: [ 'wealth', 'success', 'happiness' ]
