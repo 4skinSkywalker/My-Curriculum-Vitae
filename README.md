@@ -1,3 +1,3 @@
 # My Curriculum Vitae
 
-See it at: [federicotrotta.org](https://federicotrotta.org)
+See it at: [federicotrotta.dev](https://federicotrotta.dev)
