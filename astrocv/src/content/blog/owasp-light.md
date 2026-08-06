@@ -16,7 +16,7 @@ While the **[OWASP Top 10](https://owasp.org/Top10/2025/)** provides a good over
 
 # 1. Never Trust External Inputs
 
-Every piece of data coming from outside (users, APIs or third-party services) should always alidated in its type, length, and format.
+Every piece of data coming from outside (users, APIs or third-party services) should always be validated in its type, length, and format.
 
 Proper input validation helps prevent vulnerabilities such as SQL Injection, Cross-Site Scripting (XSS), and Command Injection.
 
