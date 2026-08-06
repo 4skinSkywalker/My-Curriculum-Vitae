@@ -5,7 +5,7 @@ title: 'OWASP Light'
 description: "Software security does not have to be complicated. The OWASP Top 10 provides an excellent reference for common web application vulnerabilities..."
 pubDate: '2026-08-06'
 type: 'post'
-tags: ['security', 'coding']
+tags: ['security', 'coding', 'guidelines']
 ---
 
 # OWASP Light
