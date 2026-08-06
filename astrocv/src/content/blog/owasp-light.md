@@ -2,7 +2,7 @@
 createdBy: 'Fredo'
 creatorIcon: 'images/creator-icon.png'
 title: 'OWASP Light'
-description: "Software security does not have to be complicated. The OWASP Top 10 provides an excellent reference for common web application vulnerabilities..."
+description: "While the **[OWASP Top 10](https://owasp.org/Top10/2025/)** provides a good overview of the most critical web application security risks..."
 pubDate: '2026-08-06'
 type: 'post'
 tags: ['security', 'coding', 'guidelines']
