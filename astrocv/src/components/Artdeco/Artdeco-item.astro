@@ -1,6 +1,5 @@
 ---
 export interface IArtdecoItem {
-    fs: string;
     image?: string;
     role?: string;
     company?: string;
@@ -10,7 +9,6 @@ export interface IArtdecoItem {
 }
 
 const {
-    fs = ".4rem",
     image = "",
     role = "",
     company = "",
@@ -21,7 +19,7 @@ const {
 ---
 
 <div class="artdeco">
-    <pre class="artdeco-image" style={`font-size: ${fs}`}>{image}</pre>
+    <img src={`images/${image}`} alt={`${company} logo`}/>
     <div>
         <div class="artdeco-role">{role}</div>
         <div class="artdeco-company self-type">{company}</div>

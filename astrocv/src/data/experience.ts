@@ -4,15 +4,7 @@ import type { IArtdecoItem } from "../components/Artdeco/Artdeco-item.astro";
 
 export const EXPERIENCE_LIST: IArtdecoItem[] = [
     {
-        fs: ".4rem",
-        image: ` ██████████   ██████████ ██████████     █████████  
-▒▒███▒▒▒▒███ ▒▒███▒▒▒▒▒█▒▒███▒▒▒▒███   ███▒▒▒▒▒███ 
- ▒███   ▒▒███ ▒███  █ ▒  ▒███   ▒▒███ ▒███    ▒███ 
- ▒███    ▒███ ▒██████    ▒███    ▒███ ▒███████████ 
- ▒███    ▒███ ▒███▒▒█    ▒███    ▒███ ▒███▒▒▒▒▒███ 
- ▒███    ███  ▒███ ▒   █ ▒███    ███  ▒███    ▒███ 
- ██████████   ██████████ ██████████   █████   █████
-▒▒▒▒▒▒▒▒▒▒   ▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒▒   ▒▒▒▒▒   ▒▒▒▒▒ `,
+        image: `/experience/deda.png`,
         role: "Lead UI Architect",
         company: "Deda.bit",
         duration: "Jul 2026 - Present",
@@ -21,15 +13,7 @@ export const EXPERIENCE_LIST: IArtdecoItem[] = [
     
     },
     {
-        fs: ".31rem",
-        image: ` █████   ███   █████ ██████████ █████       █████       █████ █████
-▒▒███   ▒███  ▒▒███ ▒▒███▒▒▒▒▒█▒▒███       ▒▒███       ▒▒███ ▒▒███ 
- ▒███   ▒███   ▒███  ▒███  █ ▒  ▒███        ▒███        ▒▒███ ███  
- ▒███   ▒███   ▒███  ▒██████    ▒███        ▒███         ▒▒█████   
- ▒▒███  █████  ███   ▒███▒▒█    ▒███        ▒███          ▒▒███    
-  ▒▒▒█████▒█████▒    ▒███ ▒   █ ▒███      █ ▒███      █    ▒███    
-    ▒▒███ ▒▒███      ██████████ ███████████ ███████████    █████   
-     ▒▒▒   ▒▒▒      ▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒▒▒    ▒▒▒▒▒    `,
+        image: `/experience/welly.png`,
         role: "Web developer",
         company: "Wellyme - Part-time",
         duration: "Dec 2023 - Present",
@@ -37,15 +21,7 @@ export const EXPERIENCE_LIST: IArtdecoItem[] = [
         descr: "Development of the user interface for the Wellyme.org blog, focusing on creating reusable components and flexible, scalable data schemas. Additionally, established social media accounts and initiated the blog’s online presence.",
     },
     {
-        fs: ".46rem",
-        image: `  █████████    █████████    █████████   █████
- ███▒▒▒▒▒███  ███▒▒▒▒▒███  ███▒▒▒▒▒███ ▒▒███ 
-▒███    ▒▒▒  ███     ▒▒▒  ▒███    ▒███  ▒███ 
-▒▒█████████ ▒███          ▒███████████  ▒███ 
- ▒▒▒▒▒▒▒▒███▒███          ▒███▒▒▒▒▒███  ▒███ 
- ███    ▒███▒▒███     ███ ▒███    ▒███  ▒███ 
-▒▒█████████  ▒▒█████████  █████   █████ █████
- ▒▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒   ▒▒▒▒▒ ▒▒▒▒▒ `,
+        image: `/experience/scai.png`,
         role: "Web developer",
         company: "SCAI Itec",
         duration: "Nov 2022 - Jun 2026",
@@ -53,15 +29,7 @@ export const EXPERIENCE_LIST: IArtdecoItem[] = [
         descr: "Led development of core UI modules and the homepage for the company portal, including an AI-powered user assistant, while also building a full-stack Federated Learning R&D tool with an intuitive interface for federation setup.",
     },
     {
-        fs: ".41rem",
-        image: ` ██████████ ███████████     ███████    █████ █████
-▒▒███▒▒▒▒▒█▒▒███▒▒▒▒▒███  ███▒▒▒▒▒███ ▒▒███ ▒▒███ 
- ▒███  █ ▒  ▒███    ▒███ ███     ▒▒███ ▒▒███ ███  
- ▒██████    ▒██████████ ▒███      ▒███  ▒▒█████   
- ▒███▒▒█    ▒███▒▒▒▒▒███▒███      ▒███   ███▒███  
- ▒███ ▒   █ ▒███    ▒███▒▒███     ███   ███ ▒▒███ 
- ██████████ ███████████  ▒▒▒███████▒   █████ █████
-▒▒▒▒▒▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒▒▒     ▒▒▒▒▒▒▒    ▒▒▒▒▒ ▒▒▒▒▒ `,
+        image: `/experience/ebox.png`,
         role: "Web developer",
         company: "Ebox",
         duration: "May 2021 - May 2022",
@@ -69,15 +37,7 @@ export const EXPERIENCE_LIST: IArtdecoItem[] = [
         descr: "Developed websites and dApps for the ebox project, gaining experience with smart contracts and blockchain libraries. Worked with web3.js, ethers.js, Polkadot API, and many wallet providers like MetaMask, WalletLink, and Coinbase Wallet.",
     },
     {
-        fs: ".46rem",
-        image: `  █████████    █████████    █████████   █████
- ███▒▒▒▒▒███  ███▒▒▒▒▒███  ███▒▒▒▒▒███ ▒▒███ 
-▒███    ▒▒▒  ███     ▒▒▒  ▒███    ▒███  ▒███ 
-▒▒█████████ ▒███          ▒███████████  ▒███ 
- ▒▒▒▒▒▒▒▒███▒███          ▒███▒▒▒▒▒███  ▒███ 
- ███    ▒███▒▒███     ███ ▒███    ▒███  ▒███ 
-▒▒█████████  ▒▒█████████  █████   █████ █████
- ▒▒▒▒▒▒▒▒▒    ▒▒▒▒▒▒▒▒▒  ▒▒▒▒▒   ▒▒▒▒▒ ▒▒▒▒▒ `,
+        image: `/experience/scai.png`,
         role: "Web developer",
         company: "SCAI Itec",
         duration: "Jul 2019 - Nov 2021",
@@ -85,15 +45,7 @@ export const EXPERIENCE_LIST: IArtdecoItem[] = [
         descr: "Developed projects in the banking sector, including Rating Desk, for credit assessments; Risk Centre, a risk analysis tool; and Accounting Integrator, which helps with financial data integration such as transactions and balances.",
     },
     {
-        fs: ".33rem",
-        image: ` ██████████   █████ ██████████     █████████     █████████    
-▒▒███▒▒▒▒███ ▒▒███ ▒▒███▒▒▒▒███   ███▒▒▒▒▒███   ███▒▒▒▒▒███   
- ▒███   ▒▒███ ▒███  ▒███   ▒▒███ ▒███    ▒███  ███     ▒▒▒    
- ▒███    ▒███ ▒███  ▒███    ▒███ ▒███████████ ▒███            
- ▒███    ▒███ ▒███  ▒███    ▒███ ▒███▒▒▒▒▒███ ▒███            
- ▒███    ███  ▒███  ▒███    ███  ▒███    ▒███ ▒▒███     ███   
- ██████████   █████ ██████████   █████   █████ ▒▒█████████  ██
-▒▒▒▒▒▒▒▒▒▒   ▒▒▒▒▒ ▒▒▒▒▒▒▒▒▒▒   ▒▒▒▒▒   ▒▒▒▒▒   ▒▒▒▒▒▒▒▒▒  ▒▒ `,
+        image: `/experience/didac.png`,
         role: "Web developer",
         company: "Didacloud",
         duration: "Jan 2016 - Jan 2018",

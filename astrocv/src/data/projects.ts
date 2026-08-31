@@ -73,7 +73,7 @@ for various assessments and improve your skills.`,
            d8888P  dP  `,
         text: `Engage in fast typing challenges with your friends at Type
 Arena! This is for training in multiplayer typing battles.`,
-        href: "https://type-arena.dev/",
+        href: "https://4skinskywalker.github.io/type-arena/",
         name: "Type Arena",
     },
     {
